@@ -1,0 +1,67 @@
+/* --- Navbar Fixed Style --- */
+.navbar {
+  position: fixed; /* ล็อกติดด้านบน */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px; /* กำหนดความสูงให้แน่นอน */
+  background-color: #ffffff; /* พื้นขาว */
+  
+  /* เส้นขอบล่างสีน้ำเงิน (ตามที่คุณต้องการ) */
+  border-bottom: 4px solid #143D60; 
+  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10%; /* จัดระยะห่างซ้ายขวา */
+  z-index: 1000; /* ให้ลอยเหนือทุกอย่าง */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* เงาบางๆ ให้ดูมีมิติเพิ่ม */
+}
+
+/* โลโก้ */
+.nav-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #143D60; /* สีน้ำเงินเข้ม */
+  text-decoration: none;
+}
+
+/* กล่องเมนู */
+.nav-menu {
+  display: flex;
+  gap: 15px;
+}
+
+/* ปุ่มแบบโปร่ง (Login / Home) */
+.btn-outline {
+  text-decoration: none;
+  padding: 8px 25px;
+  border-radius: 25px;
+  font-weight: 600;
+  border: 1.5px solid #ff5a00; /* สีส้ม */
+  color: #ff5a00;
+  background: white;
+  transition: 0.3s;
+}
+
+.btn-outline:hover {
+  background: #ff5a00;
+  color: white;
+}
+
+/* ปุ่มแบบทึบ (Register) */
+.btn-solid {
+  text-decoration: none;
+  padding: 8px 25px;
+  border-radius: 25px;
+  font-weight: 600;
+  background: #ff5a00;
+  color: white;
+  border: 1.5px solid #ff5a00;
+  transition: 0.3s;
+}
+
+.btn-solid:hover {
+  background: #e65100;
+  border-color: #e65100;
+}

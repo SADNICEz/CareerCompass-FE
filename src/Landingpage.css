@@ -1,0 +1,132 @@
+/* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.landing-page {
+  padding-top: 80px; /* ดันลงมาเท่าความสูง Navbar */
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden; /* กันคลื่นเกินขอบจอ */
+}
+/* Section Structure */
+.section {
+  position: relative; /* ให้ Wave อ้างอิงตำแหน่งตาม Section นี้ */
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* ตัดส่วนคลื่นที่เกินหน้าจอออก */
+}
+
+/* ตัวหุ้มคลื่น */
+.wave-wrapper {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  line-height: 0;
+  z-index: 1; /* อยู่ต่ำกว่าเนื้อหา */
+}
+
+.wave-wrapper svg {
+  width: 100%;
+  height: 200px; /* ปรับความสูงคลื่นให้พอดี ไม่ให้ใหญ่เกินไป */
+}
+
+/* ตำแหน่งคลื่น */
+.wave-wrapper.bottom {
+  bottom: 0;
+}
+
+.wave-wrapper.top {
+  top: 0;
+}
+
+/* การพลิกคลื่น */
+.wave-wrapper.flip {
+  transform: rotate(180deg);
+}
+
+/* จัดการเนื้อหาให้ลอยทับคลื่น */
+.content-wrapper {
+  position: relative;
+  z-index: 10; /* ให้เนื้อหาอยู่บนคลื่นแน่นอน */
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+/* แก้ไขรูปภาพให้ไม่มีขอบขาว (ถ้ามี) */
+.image-box img {
+  max-width: 350px;
+  filter: drop-shadow(0 15px 30px rgba(0,0,0,0.4));
+}
+.bg-dark {
+  background-color: #143D60;
+  color: white;
+}
+
+.bg-light {
+  background-color: #ffffff;
+  color: #143D60;
+}
+
+.content-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  max-width: 1200px;
+  width: 100%;
+  z-index: 2;
+}
+
+.content-wrapper.reverse {
+  flex-direction: row-reverse;
+}
+
+/* Text & Visuals */
+.text-box {
+  flex: 1;
+}
+
+.text-box h2 {
+  font-size: 2.8rem;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.highlight {
+  color: #ff5a00;
+}
+
+.text-box p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.image-box {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.mbti-char {
+  max-width: 100%;
+  height: auto;
+  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.3));
+}
+
+.play-img-btn {
+  width: 40px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: 0.2s;
+}
+.play-img-btn:hover {
+  transform: scale(1.1);
+}

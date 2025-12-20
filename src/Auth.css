@@ -1,0 +1,239 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* ป้องกันเลื่อนซ้ายขวา */
+}
+
+.auth-container {
+  /* ไม้ตาย: สั่ง Fixed ไม่ให้ขยับ และขึงให้ตึง */
+  position: fixed; 
+  top: 80px;      /* เริ่มต้นใต้ Navbar */
+  left: 0;
+  right: 0;
+  bottom: 0;      /* ยาวไปชนขอบล่าง */
+  
+  /* จัด Layout ข้างใน */
+  display: flex;
+  width: 100%;    /* เต็มความกว้าง */
+  background: white;
+  overflow: hidden; /* ห้ามมี Scrollbar เด็ดขาด */
+}
+
+/* --- ฝั่งซ้าย (สีน้ำเงิน) --- */
+.info-side {
+  flex: 1; /* กินพื้นที่ครึ่งหนึ่ง (หรือปรับเป็น 40%) */
+  background-color: #143D60; /* สีน้ำเงินเข้ม */
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: 0.5s ease;
+}
+
+.info-content {
+  position: absolute;
+  text-align: left; /* จัดชิดซ้ายแบบในรูป */
+  padding-left: 50px; /* ขยับข้อความเข้ามาหน่อย */
+  width: 100%;
+  transition: 0.5s ease;
+}
+
+.info-content h1 {
+  font-size: 3.5rem;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* Logic สลับข้อความฝั่งซ้าย */
+.register-msg {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.auth-container.active .login-msg {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.auth-container.active .register-msg {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* --- ฝั่งขวา (สีขาว) --- */
+.form-side {
+  flex: 1; /* กินพื้นที่อีกครึ่ง */
+  background: white;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-box {
+  position: absolute;
+  width: 100%;
+  max-width: 400px; /* ความกว้างฟอร์ม */
+  padding: 20px;
+  transition: 0.5s ease;
+}
+
+.form-box h2 {
+  font-size: 2.5rem;
+  color: #143D60;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: 700;
+}
+
+/* --- Input Style (ตามรูป: ขอบมน, พื้นขาว, กรอบเทา) --- */
+.input-group {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.input-group input, 
+.input-group select {
+  width: 100%;
+  padding: 12px 20px;
+  border: 1px solid #888; /* กรอบสีเทาเข้มหน่อย */
+  border-radius: 30px; /* ขอบมนแบบแคปซูล */
+  background: transparent;
+  font-size: 1rem;
+  outline: none;
+  color: #333;
+}
+
+/* ปรับสี Placeholder */
+.input-group input::placeholder {
+  color: #aaa;
+}
+
+/* --- Button Style (สีส้ม, ขอบมน) --- */
+.btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 30px; /* ขอบมน */
+  background: #e65100; /* สีส้มเข้ม (ปรับเป็น #ff5a00 ได้) */
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(230, 81, 0, 0.3);
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #ff6d00;
+  transform: scale(1.02);
+}
+
+/* --- Footer Text --- */
+.footer-text {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.footer-text span {
+  color: #143D60; /* สีลิงก์น้ำเงินเข้ม */
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+/* --- LOGIC สลับฟอร์ม (Login <-> Register) --- */
+.register-form {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(50px); /* ดันไปขวาหน่อย */
+}
+
+.auth-container.active .login-form {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50px); /* Login หลบไปซ้าย */
+}
+
+.auth-container.active .register-form {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(0);
+}
+
+/* --- Animation Stagger (ให้ค่อยๆ โผล่) --- */
+.animation {
+  opacity: 0;
+  transform: translateY(10px); /* เปลี่ยนเป็นเลื่อนขึ้น */
+  transition: 0.5s ease;
+  transition-delay: calc(0.1s * var(--li));
+}
+
+.form-box.login-form .animation {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.auth-container.active .register-form .animation {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ซ่อน animation ตอนฟอร์มถูกซ่อน */
+.auth-container.active .login-form .animation {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+.form-box.register-form .animation {
+  opacity: 0; 
+}
+/* --- Navbar Style (เหมือน Landing Page) --- */
+.auth-navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 10%; /* ระยะห่างเท่ากับหน้า Landing Page */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100; /* ลอยทับทุกอย่าง */
+}
+
+/* โลโก้ */
+.auth-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff; /* สีขาว เพื่อให้เด่นบนพื้นน้ำเงิน */
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* --- Responsive (เมื่อจอเล็ก พื้นน้ำเงินหาย) --- */
+@media (max-width: 768px) {
+  .auth-navbar {
+    padding: 15px 20px;
+    background: white; /* ใส่พื้นหลังขาวให้ Navbar ในมือถือ */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* เพิ่มเงา */
+  }
+
+  .auth-logo {
+    color: #143D60; /* เปลี่ยนโลโก้เป็นสีน้ำเงิน เพราะพื้นหลังกลายเป็นขาว */
+  }
+}
