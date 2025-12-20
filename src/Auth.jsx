@@ -18,7 +18,6 @@ function Auth() {
 
   return (
     <div className={`auth-container ${isActive ? 'active' : ''}`}>
-      {/* --- ส่วนเนื้อหาเดิม (Info Side & Form Side) --- */}
       <div className="info-side">
         <div className="info-content login-msg">
           <h1>Hello,<br />Welcome!</h1>
@@ -29,7 +28,6 @@ function Auth() {
       </div>
 
       <div className="form-side">
-        {/* ... (Login/Register Form เดิมของคุณ ไม่ต้องแก้) ... */}
          <div className="form-box login-form">
             <h2>Login</h2>
             <form>

@@ -8,7 +8,6 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-        {/* ถ้าเข้าเว็บมาเฉยๆ (/) ให้ไปหน้า LandingPage */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Auth />} />
         <Route path="/register" element={<Auth />} />

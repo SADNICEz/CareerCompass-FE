@@ -5,12 +5,10 @@ import './Navbar.css';
 function Navbar() {
   const location = useLocation();
   
-  // เช็คว่าตอนนี้อยู่หน้า Auth (Login/Register) หรือไม่
   const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
 
   return (
     <nav className="navbar">
-      {/* โลโก้: สีน้ำเงินเข้มเสมอ (ตามรูป) */}
       <Link to="/" className="nav-logo">
         CareerCompass
       </Link>

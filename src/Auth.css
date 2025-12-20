@@ -10,28 +10,25 @@
 body, html {
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* ป้องกันเลื่อนซ้ายขวา */
+  overflow-x: hidden; 
 }
 
 .auth-container {
-  /* ไม้ตาย: สั่ง Fixed ไม่ให้ขยับ และขึงให้ตึง */
   position: fixed; 
-  top: 80px;      /* เริ่มต้นใต้ Navbar */
+  top: 80px;     
   left: 0;
   right: 0;
-  bottom: 0;      /* ยาวไปชนขอบล่าง */
+  bottom: 0;     
   
-  /* จัด Layout ข้างใน */
   display: flex;
-  width: 100%;    /* เต็มความกว้าง */
+  width: 100%;    
   background: white;
-  overflow: hidden; /* ห้ามมี Scrollbar เด็ดขาด */
+  overflow: hidden; 
 }
 
-/* --- ฝั่งซ้าย (สีน้ำเงิน) --- */
 .info-side {
-  flex: 1; /* กินพื้นที่ครึ่งหนึ่ง (หรือปรับเป็น 40%) */
-  background-color: #143D60; /* สีน้ำเงินเข้ม */
+  flex: 1; 
+  background-color: #143D60; 
   position: relative;
   display: flex;
   align-items: center;
@@ -42,8 +39,8 @@ body, html {
 
 .info-content {
   position: absolute;
-  text-align: left; /* จัดชิดซ้ายแบบในรูป */
-  padding-left: 50px; /* ขยับข้อความเข้ามาหน่อย */
+  text-align: left; 
+  padding-left: 50px; 
   width: 100%;
   transition: 0.5s ease;
 }
@@ -55,7 +52,6 @@ body, html {
   letter-spacing: 1px;
 }
 
-/* Logic สลับข้อความฝั่งซ้าย */
 .register-msg {
   opacity: 0;
   transform: translateY(20px);
@@ -72,9 +68,8 @@ body, html {
 }
 
 
-/* --- ฝั่งขวา (สีขาว) --- */
 .form-side {
-  flex: 1; /* กินพื้นที่อีกครึ่ง */
+  flex: 1;
   background: white;
   position: relative;
   display: flex;
@@ -85,7 +80,7 @@ body, html {
 .form-box {
   position: absolute;
   width: 100%;
-  max-width: 400px; /* ความกว้างฟอร์ม */
+  max-width: 400px;
   padding: 20px;
   transition: 0.5s ease;
 }
@@ -98,7 +93,6 @@ body, html {
   font-weight: 700;
 }
 
-/* --- Input Style (ตามรูป: ขอบมน, พื้นขาว, กรอบเทา) --- */
 .input-group {
   margin-bottom: 15px;
   width: 100%;
@@ -108,27 +102,33 @@ body, html {
 .input-group select {
   width: 100%;
   padding: 12px 20px;
-  border: 1px solid #888; /* กรอบสีเทาเข้มหน่อย */
-  border-radius: 30px; /* ขอบมนแบบแคปซูล */
+  border: 1px solid #888; 
+  border-radius: 30px; 
   background: transparent;
   font-size: 1rem;
   outline: none;
   color: #333;
 }
 
-/* ปรับสี Placeholder */
+.input-group select:invalid {
+    color: #aaa; 
+}
+
+.input-group select option {
+    color: #333;
+}
+
 .input-group input::placeholder {
   color: #aaa;
 }
 
-/* --- Button Style (สีส้ม, ขอบมน) --- */
 .btn {
   width: 100%;
   padding: 12px;
   margin-top: 10px;
   border: none;
-  border-radius: 30px; /* ขอบมน */
-  background: #e65100; /* สีส้มเข้ม (ปรับเป็น #ff5a00 ได้) */
+  border-radius: 30px; 
+  background: #e65100; 
   color: white;
   font-size: 1.1rem;
   font-weight: 600;
@@ -142,7 +142,6 @@ body, html {
   transform: scale(1.02);
 }
 
-/* --- Footer Text --- */
 .footer-text {
   margin-top: 15px;
   text-align: center;
@@ -151,24 +150,23 @@ body, html {
 }
 
 .footer-text span {
-  color: #143D60; /* สีลิงก์น้ำเงินเข้ม */
+  color: #143D60;
   font-weight: 700;
   text-decoration: underline;
   cursor: pointer;
   margin-left: 5px;
 }
 
-/* --- LOGIC สลับฟอร์ม (Login <-> Register) --- */
 .register-form {
   opacity: 0;
   pointer-events: none;
-  transform: translateX(50px); /* ดันไปขวาหน่อย */
+  transform: translateX(50px);
 }
 
 .auth-container.active .login-form {
   opacity: 0;
   pointer-events: none;
-  transform: translateX(-50px); /* Login หลบไปซ้าย */
+  transform: translateX(-50px); 
 }
 
 .auth-container.active .register-form {
@@ -177,10 +175,9 @@ body, html {
   transform: translateX(0);
 }
 
-/* --- Animation Stagger (ให้ค่อยๆ โผล่) --- */
 .animation {
   opacity: 0;
-  transform: translateY(10px); /* เปลี่ยนเป็นเลื่อนขึ้น */
+  transform: translateY(10px); 
   transition: 0.5s ease;
   transition-delay: calc(0.1s * var(--li));
 }
@@ -195,7 +192,6 @@ body, html {
   transform: translateY(0);
 }
 
-/* ซ่อน animation ตอนฟอร์มถูกซ่อน */
 .auth-container.active .login-form .animation {
   opacity: 0;
   transform: translateY(-10px);
@@ -203,37 +199,34 @@ body, html {
 .form-box.register-form .animation {
   opacity: 0; 
 }
-/* --- Navbar Style (เหมือน Landing Page) --- */
 .auth-navbar {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  padding: 20px 10%; /* ระยะห่างเท่ากับหน้า Landing Page */
+  padding: 20px 10%; 
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 100; /* ลอยทับทุกอย่าง */
+  z-index: 100; 
 }
 
-/* โลโก้ */
 .auth-logo {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #fff; /* สีขาว เพื่อให้เด่นบนพื้นน้ำเงิน */
+  color: #fff; 
   text-decoration: none;
   cursor: pointer;
 }
 
-/* --- Responsive (เมื่อจอเล็ก พื้นน้ำเงินหาย) --- */
 @media (max-width: 768px) {
   .auth-navbar {
     padding: 15px 20px;
-    background: white; /* ใส่พื้นหลังขาวให้ Navbar ในมือถือ */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* เพิ่มเงา */
+    background: white; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
   }
 
   .auth-logo {
-    color: #143D60; /* เปลี่ยนโลโก้เป็นสีน้ำเงิน เพราะพื้นหลังกลายเป็นขาว */
+    color: #143D60;
   }
 }

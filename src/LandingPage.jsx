@@ -2,13 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Landingpage.css';
 import Navbar from './Navbar';
-// อย่าลืมเปลี่ยนชื่อไฟล์รูปภาพให้ตรงกับที่คุณเซฟไว้ใน src/assets นะครับ
+
 import img1 from './assets/1.png'; 
 import img2 from './assets/2.png';
 import img3 from './assets/3.png';
 import playIcon from './assets/play-icon.png';
 
-// Component สำหรับสร้างคลื่น
 const Wave = ({ color, isFlip, isBottom }) => (
   <div className={`wave-wrapper ${isFlip ? 'flip' : ''} ${isBottom ? 'bottom' : 'top'}`}>
     <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
@@ -23,9 +22,7 @@ const Wave = ({ color, isFlip, isBottom }) => (
 function LandingPage() {
   return (
     <div className="landing-page">
-      {/* Navbar */}
       <Navbar />
-      {/* Section 1: Blue Background */}
       <section className="section bg-dark">
         <div className="content-wrapper">
           <div className="image-box"><img src={img1} /></div>
@@ -37,11 +34,9 @@ function LandingPage() {
             </Link>
           </div>
         </div>
-        {/* คลื่นขาว อยู่ขอบล่างของ Section น้ำเงิน */}
         <Wave color="#fafafa" isBottom={true} isFlip={false} />
       </section>
 
-      {/* Section 2: White Background */}
       <section className="section bg-light">
         <div className="content-wrapper reverse">
           <div className="image-box"><img src={img2} /></div>
@@ -53,11 +48,9 @@ function LandingPage() {
             </Link> 
           </div>
         </div>
-        {/* คลื่นน้ำเงิน พลิกกลับหัว อยู่ขอบล่างของ Section ขาว เพื่อต่อกับ Section 3 */}
         <Wave color="#143D60" isBottom={true} isFlip={false} />
       </section>
       
-      {/* Section 3: Blue Background */}
       <section className="section bg-dark">
         <div className="content-wrapper">
           <div className="image-box"><img src={img3} /></div>
