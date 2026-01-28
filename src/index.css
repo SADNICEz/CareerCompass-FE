@@ -1,3 +1,16 @@
+@font-face {
+  font-family: "Phetsarath";
+  src: url("./assets/fonts/Phetsarath-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Phetsarath";
+  src: url("./assets/fonts/Phetsarath-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
 
 :root {
   margin: 0;
@@ -8,6 +21,8 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Phetsarath", sans-serif;
+  line-height: 1.6;
 }
 
 #root {
