@@ -1,67 +1,105 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './Landingpage.css';
-import Navbar from './Navbar';
+import React from "react";
+import { Link } from "react-router-dom";
+import "./Landingpage.css";
+import Navbar from "./Navbar";
 
-import img1 from './assets/Advocate_INFJ.png'; 
-import img2 from './assets/Debater_ENTP.png';
-import img3 from './assets/Logistician_ISTJ.png';
-import playIcon from './assets/play-icon.png';
-
-const Wave = ({ color, isFlip, isBottom }) => (
-  <div className={`wave-wrapper ${isFlip ? 'flip' : ''} ${isBottom ? 'bottom' : 'top'}`}>
-    <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
-      <path 
-        fill={color} 
-        d="M0,64L60,64C120,64,240,64,360,96C480,128,600,192,720,208C840,224,960,192,1080,160C1200,128,1320,96,1380,80L1440,64L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z">
-      </path>
-    </svg>
-  </div>
-);
+import img1 from "./assets/Advocate_INFJ.png";
+import img2 from "./assets/Debater_ENTP.png";
+import img3 from "./assets/Logistician_ISTJ.png";
+import img4 from "./assets/Commander_ENTJ.png";
+import img5 from "./assets/Defender_ISFJ.png";
+import img6 from "./assets/Logician_INTP.png";
+import img7 from "./assets/Architect_INTJ.png";
+import img8 from "./assets/Consul_ESFJ.png";
+import playIcon from "./assets/play-icon.png";
 
 function LandingPage() {
   return (
     <div className="landing-page">
       <Navbar />
-      <section className="section bg-dark">
-        <div className="content-wrapper">
-          <div className="image-box"><img src={img1} /></div>
-          <div className="text-box">
-            <h2>รู้จักตัวเองหรือยัง?</h2>
-            <p>ค้นพบตัวตนและบุคลิกภาพของคุณ พร้อมทั้งแบบทดสอบความถนัด เพื่อทดสอบความสามารถเบื้องต้นและค้นหาความถนัดในตัวคุณ</p>
-            <Link to="/login">
-              <img src={playIcon} className="play-img-btn" alt="play" />
-            </Link>
-          </div>
+
+      {/* ===== HERO SECTION ===== */}
+      <section className="hero">
+        <div className="hero-text top">
+          <h1>
+            <span>รู้จักตัวเองหรือยัง?</span>
+          </h1>
+          <p>
+            ค้นพบตัวตน บุคลิกภาพ และความถนัดของคุณ
+          </p>
+
+          <Link to="/login" className="cta-btn">
+            เริ่มต้นใช้งาน
+          </Link>
         </div>
-        <Wave color="#fafafa" isBottom={true} isFlip={false} />
+
+        <div className="character-row">
+          <img src={img1} alt="char1" />
+          <img src={img3} alt="char2" />
+          <img src={img5} alt="char3" />
+          <img src={img6} alt="char4" />
+        </div>
+
+        {/* ↓ SCROLL TO LEARNING */}
+        <a href="#learning" className="scroll-down">
+          <img src={playIcon} alt="scroll to learning" />
+        </a>
       </section>
 
-      <section className="section bg-light">
-        <div className="content-wrapper reverse">
-          <div className="image-box"><img src={img2} /></div>
-          <div className="text-box">
-            <h2>ค้นหาเส้นทางชีวิตที่เหมาะกับคุณ <br /><span className="highlight">ด้วยพลังของ AI</span></h2>
-            <p>ให้ AI ช่วยวิเคราะห์บุคลิกภาพ ความถนัด เพื่อแนะนำอาชีพที่เหมาะกับคุณ</p>
-            <Link to="/login">
-              <img src={playIcon} className="play-img-btn" alt="play" />
-            </Link> 
+      {/* ===== LEARNING PATH SECTION ===== */}
+      <section className="learning-section" id="learning">
+        <div className="learning-content">
+          
+          {/* LEFT SIDE IMAGES */}
+          <div className="learning-images">
+            <img src={img2} alt="learning1" />
+            <img src={img4} alt="learning2" />
           </div>
-        </div>
-        <Wave color="#143D60" isBottom={true} isFlip={false} />
-      </section>
-      
-      <section className="section bg-dark">
-        <div className="content-wrapper">
-          <div className="image-box"><img src={img3} /></div>
-          <div className="text-box">
+
+          {/* TEXT */}
+          <div className="learning-text">
             <h2>ก้าวแรกของการเรียนรู้</h2>
-            <p>ให้ Learning Path นำทางคุณจากพื้นฐานสู่ความเชี่ยวชาญ</p>
-            <Link to="/login">
-              <img src={playIcon} className="play-img-btn" alt="play" />
+            <p>
+              ให้ Learning Path นำทางคุณจากพื้นฐาน สู่ความเชี่ยวชาญ
+            </p>
+
+            <Link to="/login" className="play-btn">
+              เริ่มต้นใช้งาน
             </Link>
           </div>
-        </div>  
+        </div>
+
+        {/* ↓ SCROLL TO AI (อยู่ล่างสุดเหมือน Hero) */}
+        <a href="#ai" className="scroll-down bottom">
+          <img src={playIcon} alt="scroll to ai" />
+        </a>
+      </section>
+      {/* ===== AI CAREER SECTION ===== */}
+      <section className="ai-section" id="ai">
+        <div className="ai-content">
+
+          {/* TEXT LEFT */}
+          <div className="ai-text">
+            <h2>
+              ค้นหาเส้นทางชีวิตที่เหมาะกับคุณ <span>ด้วยพลังของ AI</span>
+            </h2>
+
+            <p>
+              ให้ AI ช่วยวิเคราะห์บุคลิก ความถนัด เพื่อแนะนำอาชีพที่เหมาะกับคุณ
+            </p>
+
+            <Link to="/login" className="play-btn">
+              เริ่มต้นใช้งาน
+            </Link>
+          </div>
+
+          {/* IMAGES RIGHT */}
+          <div className="ai-images">
+            <img src={img7} alt="ai-char-1" />
+            <img src={img8} alt="ai-char-2" />
+          </div>
+
+        </div>
       </section>
     </div>
   );
