@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import './Landingpage.css';
 import Navbar from './Navbar';
 
-import img1 from './assets/1.png'; 
-import img2 from './assets/2.png';
-import img3 from './assets/3.png';
+import img1 from './assets/Advocate_INFJ.png'; 
+import img2 from './assets/Debater_ENTP.png';
+import img3 from './assets/Logistician_ISTJ.png';
 import playIcon from './assets/play-icon.png';
 
 const Wave = ({ color, isFlip, isBottom }) => (

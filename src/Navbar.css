@@ -34,14 +34,17 @@
   padding: 8px 25px;
   border-radius: 25px;
   font-weight: 600;
-  border: 1.5px solid #ff5a00; 
-  color: #ff5a00;
-  background: white;
+
+  background: #ff5a00;    
+  color: white;            
+  border: 1.5px solid #ff5a00;
+
   transition: 0.3s;
 }
 
 .btn-outline:hover {
-  background: #ff5a00;
+  background: #e65100;
+  border-color: #e65100;
   color: white;
 }
 
