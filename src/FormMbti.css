@@ -35,19 +35,39 @@
    Question Card
    ===================================================== */
 
+/* =====================================================
+   Question Card (MBTI) – Hover แบบ Aptitude
+   ===================================================== */
+
 .question-card {
-  border: 2px solid #ff7a00;
+  background: #ffffff;
   border-radius: 14px;
-  padding: 20px;
-  margin-bottom: 22px;
-  background: #fff;
+  padding: 20px 22px;
+  margin-bottom: 24px;
+  border: 1px solid #e6e6e6;
+
+  /* animation */
+  transition: 
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
 }
 
+/* ⭐ Hover effect */
+.question-card:hover {
+  border-color: #ff6b00;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+/* Title */
 .question-title {
+  font-size: 16px;
   font-weight: 600;
   margin-bottom: 16px;
-  line-height: 1.5;
+  color: #0b2c4a;
 }
+
 
 /* =====================================================
    Options

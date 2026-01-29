@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useProgress } from "./context/ProgressContext";
 import "./Home.css";
 
 import formIcon from "./assets/form.png";
@@ -13,21 +15,36 @@ const mbtiTypes = [
 ];
 
 function Home() {
-  const [selected, setSelected] = useState(null); 
+  const [selected, setSelected] = useState(null);
+  const navigate = useNavigate();
 
+  // 🔹 ดึง progress จาก Context (คำนวณให้แล้ว)
+  const { visualProgress } = useProgress();
+
+  const handleNext = () => {
+    if (!selected) return;
+    navigate("/aptitude");
+  };
 
   return (
     <div className="home-container">
-      {/* Hero */}
+      {/* ================= Hero ================= */}
       <h1 className="hero-title">
         ค้นหาอาชีพที่ใช่สำหรับคุณ <br />
         ด้วยเทคโนโลยี <span>AI</span>
       </h1>
 
-      {/* Progress Bar */}
+      {/* ================= Progress (แบบสอบถาม) ================= */}
       <div className="progress-container">
-        <div className="progress-line" />
+        {/* เส้น progress (จำกัดอยู่ใน step แบบสอบถาม) */}
+        <div className="progress-line">
+          <div
+            className="progress-line-fill"
+            style={{ width: `${visualProgress}%` }}
+          />
+        </div>
 
+        {/* Step: แบบสอบถาม (active ตลอดช่วง survey) */}
         <div className="progress-step active">
           <div className="progress-circle">
             <img src={formIcon} alt="แบบสอบถาม" />
@@ -35,6 +52,7 @@ function Home() {
           <span>แบบสอบถาม</span>
         </div>
 
+        {/* Step: อาชีพ AI (ยังไม่ active) */}
         <div className="progress-step">
           <div className="progress-circle">
             <img src={aiIcon} alt="อาชีพที่ AI แนะนำ" />
@@ -42,6 +60,7 @@ function Home() {
           <span>อาชีพที่ AI แนะนำ</span>
         </div>
 
+        {/* Step: Learning Path */}
         <div className="progress-step">
           <div className="progress-circle">
             <img src={learningIcon} alt="Learning Path" />
@@ -50,26 +69,37 @@ function Home() {
         </div>
       </div>
 
-      {/* MBTI Card */}
+      {/* ================= MBTI Card ================= */}
       <div className="mbti-card">
         <h2>แบบสอบถาม MBTI</h2>
 
         <div className="mbti-grid">
-            {mbtiTypes.map(type => (
-        <button
-            key={type}
-            className={`mbti-btn ${selected === type ? "active" : ""}`}
-            onClick={() => setSelected(type)}  
-        >
-        {type}
-        </button>
-        ))}
-    </div>
-
+          {mbtiTypes.map((type) => (
+            <button
+              key={type}
+              className={`mbti-btn ${selected === type ? "active" : ""}`}
+              onClick={() => setSelected(type)}
+            >
+              {type}
+            </button>
+          ))}
+        </div>
 
         <div className="mbti-footer">
-          <span className="mbti-link">ถ้ายังไม่รู้ MBTI ตัวเอง</span>
-          <button className="next-btn">ถัดไป</button>
+          <span
+            className="mbti-link"
+            onClick={() => navigate("/formmbti")}
+          >
+            ถ้ายังไม่รู้ MBTI ตัวเอง
+          </span>
+
+          <button
+            className="next-btn"
+            disabled={!selected}
+            onClick={handleNext}
+          >
+            ถัดไป
+          </button>
         </div>
       </div>
     </div>

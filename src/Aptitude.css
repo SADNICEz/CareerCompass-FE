@@ -1,0 +1,157 @@
+/* ===============================
+   Progress Bar
+================================ */
+/* เส้นเทา (เต็มทุก step) */
+.progress-line {
+  position: absolute;
+  top: 40px;
+  left: 60px;
+  right: 60px;
+  height: 2px;
+  background: #d9d9d9;
+  z-index: 0;
+}
+
+/* 🚫 เส้นส้ม: จำกัดแค่ช่วงแบบสอบถาม */
+.progress-line-active {
+  position: absolute;
+  top: 40px;
+  left: 60px;
+  width: calc(100% - 120px); /* ระยะจริง */
+  max-width: 50%; /* 🔥 หยุดก่อนวงกลมอาชีพ AI */
+  height: 2px;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* เส้นที่ขยับได้ */
+.progress-fill {
+  height: 100%;
+  background: #ff6b00;
+  transition: width 0.3s ease;
+}
+
+/* สถานะ */
+.progress-33 { width: 33%; }
+.progress-66 { width: 56%; }
+.progress-99 { width: 99%; }
+
+
+/* ===============================
+   Aptitude Card
+================================ */
+.aptitude-card {
+  border: 2px solid #ff6b00;
+  border-radius: 20px;
+  padding: 32px;
+  margin-top: 20px;
+  background: #ffffff;
+}
+
+.aptitude-card h2 {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 36px;
+  color: #0b2c4a;
+}
+
+/* ===============================
+   Question Box
+================================ */
+.question-box {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 20px 22px;
+  margin-bottom: 24px;
+  border: 1px solid #e6e6e6;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.question-box:hover {
+  border-color: #ff6b00;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+}
+
+.question-title {
+  text-align: left;      
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #0b2c4a;
+}
+
+/* ===============================
+   Options
+================================ */
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.option:hover {
+  background: #f7f7f7;
+}
+
+.option input {
+  accent-color: #ff6b00;
+}
+
+/* ===============================
+   Footer
+================================ */
+.aptitude-footer {
+  margin-top: 40px;
+  padding-top: 22px;
+  border-top: 1px solid #e6e6e6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.progress-text {
+  font-size: 14px;
+  color: #666666;
+}
+
+/* ===============================
+   Button
+================================ */
+.next-btn {
+  background: #ff6b00;
+  color: #ffffff;
+  border: none;
+  padding: 10px 32px;
+  border-radius: 20px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.next-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ===============================
+   Responsive
+================================ */
+@media (max-width: 900px) {
+  .options {
+    grid-template-columns: 1fr;
+  }
+
+  .aptitude-card {
+    padding: 26px 20px;
+  }
+}
