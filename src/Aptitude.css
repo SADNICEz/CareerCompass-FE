@@ -143,6 +143,16 @@
   cursor: not-allowed;
 }
 
+.back-btn {
+  background: transparent;
+  color: #ff6b00;
+  border: 2px solid #ff6b00;
+  padding: 8px 28px;
+  border-radius: 20px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 /* ===============================
    Responsive
 ================================ */

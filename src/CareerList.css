@@ -1,0 +1,93 @@
+.career-list-container {
+  max-width: 800px;
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 20px;
+}
+
+.career-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  border: 1px solid #f0f0f0;
+}
+
+.career-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(255, 107, 0, 0.15); /* เงาส้มจางๆ */
+  border-color: #ff6b00;
+}
+
+/* กล่องไอคอนสีส้ม */
+.career-icon-box {
+  background: #ff6b00; /* สีส้ม */
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.career-icon-box .icon {
+  color: white;
+  width: 32px;
+  height: 32px;
+}
+
+/* ข้อความ */
+.career-info {
+  flex-grow: 1;
+  text-align: left;
+}
+
+.career-info h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.career-info p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.4;
+}
+
+/* ลูกศรขวาสุด */
+.arrow-icon {
+  font-size: 1.5rem;
+  color: #ccc;
+  font-weight: bold;
+}
+
+.footer-action {
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.back-btn-outline {
+    background: transparent;
+    border: 2px solid #ff6b00;
+    color: #ff6b00;
+    padding: 10px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.back-btn-outline:hover {
+    background: #ff6b00;
+    color: white;
+}

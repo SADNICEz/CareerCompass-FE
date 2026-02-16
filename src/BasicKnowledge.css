@@ -1,3 +1,5 @@
+/* ไฟล์: src/BasicKnowledge.css */
+
 /* ===============================
    Knowledge Card
 ================================ */
@@ -28,12 +30,8 @@
   text-align: center; 
 }
 
-
 /* ===============================
    Skill Tags
-================================ */
-/* ===============================
-   Skill Category Box (non-click)
 ================================ */
 .skill-group {
   display: flex;
@@ -46,27 +44,14 @@
 .skill-box {
   padding: 10px 16px;
   border: 2px solid #ff6b00;
-  border-radius: 6px;          /* มุมเหลี่ยม */
+  border-radius: 6px;           
   background: #f7e8dc;
   color: #ff6b00;
   font-weight: 600;
   font-size: 14px;
-  cursor: default;             /* ไม่เป็นมือ */
+  cursor: default;             
   user-select: none;
   letter-spacing: 0.2px;
-}
-
-
-.skill-tag {
-  padding: 8px 18px;
-  border-radius: 20px;
-  border: 1.5px solid #ff6b00;
-  color: #ff6b00;
-  background: #f7e8dc;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: default;
-  user-select: none;
 }
 
 /* ===============================
@@ -95,7 +80,7 @@
 ================================ */
 .knowledge-footer {
   display: flex;
-  justify-content: space-between; /* 🔥 Back ซ้าย / Confirm ขวา */
+  justify-content: space-between; 
   align-items: center;
 }
 
@@ -135,13 +120,13 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
 /* ===============================
    Progress Width
 ================================ */
 .progress-30 {
   width: 50%;
 }
-
 
 /* ===============================
    Responsive

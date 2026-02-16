@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "./context/UserContext";
 import "./Aptitude.css";
 
 import formIcon from "./assets/form.png";
 import aiIcon from "./assets/ai.png";
 import learningIcon from "./assets/learning.png";
+
 
 const questions = [
   // -------- A : Analytical --------
@@ -266,6 +268,7 @@ const questions = [
 function Aptitude() {
   const [answers, setAnswers] = useState({});
   const navigate = useNavigate();
+  const { updateUserData } = useUser();
 
   const handleSelect = (qId, type) => {
     setAnswers((prev) => ({
@@ -278,6 +281,7 @@ function Aptitude() {
 
   const handleNext = () => {
     if (!isCompleted) return;
+    updateUserData("aptitudeScores", answers);
     navigate("/basicknowledge");
   };
 
