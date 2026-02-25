@@ -1,198 +1,45 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { mbtiQuestions } from "./data/mbtiQuestions";
 import "./FormMbti.css";
 
-/* ================= QUESTIONS ================= */
-const questions = [
-  {
-    id: 1,
-    text: "เมื่อเจอสังคมหรือคนใหม่ๆ คุณมักจะ…",
-    options: [
-      { label: "รู้สึกตื่นเต้น อยากเริ่มบทสนทนาและสร้างความสัมพันธ์", value: "E" },
-      { label: "รู้สึกต้องปรับตัว ใช้พลังงาน และชอบสังเกตมากกว่าพูด", value: "I" },
-    ],
-  },
-  {
-    id: 2,
-    text: "หลังจากทำกิจกรรมร่วมกับคนจำนวนมาก คุณจะ…",
-    options: [
-      { label: "รู้สึกมีพลังและอยากทำอย่างอื่นต่อ", value: "E" },
-      { label: "รู้สึกเหนื่อยและอยากอยู่เงียบๆ คนเดียว", value: "I" },
-    ],
-  },
-  {
-    id: 3,
-    text: "เวลาคิดหรือแก้ปัญหา คุณมักจะ…",
-    options: [
-      { label: "คิดออกเสียง พูดคุยกับคนอื่นเพื่อหาคำตอบ", value: "E" },
-      { label: "คิดในใจคนเดียวก่อน แล้วค่อยสื่อสารออกมา", value: "I" },
-    ],
-  },
-  {
-    id: 4,
-    text: "ในการทำงานกลุ่ม คุณมักจะ…",
-    options: [
-      { label: "มีส่วนร่วมในการพูดคุย แลกเปลี่ยนไอเดีย", value: "E" },
-      { label: "ฟังเป็นหลัก และพูดเมื่อเห็นว่าจำเป็น", value: "I" },
-    ],
-  },
-  {
-    id: 5,
-    text: "วันหยุดที่คุณรู้สึกผ่อนคลายที่สุดคือ…",
-    options: [
-      { label: "ได้ออกไปพบปะเพื่อนหรือทำกิจกรรมนอกบ้าน", value: "E" },
-      { label: "ได้อยู่บ้านหรือใช้เวลากับตัวเอง", value: "I" },
-    ],
-  },
-
-  // S / N
-  {
-    id: 6,
-    text: "เมื่อเรียนรู้สิ่งใหม่ คุณให้ความสำคัญกับ…",
-    options: [
-      { label: "ข้อมูลจริง รายละเอียด และสิ่งที่พิสูจน์ได้", value: "S" },
-      { label: "แนวคิด ภาพรวม และความเป็นไปได้ในอนาคต", value: "N" },
-    ],
-  },
-  {
-    id: 7,
-    text: "เวลาฟังคนเล่าเรื่อง คุณมักจะจำ…",
-    options: [
-      { label: "รายละเอียด เหตุการณ์ และข้อเท็จจริง", value: "S" },
-      { label: "ใจความสำคัญหรือความหมายของเรื่อง", value: "N" },
-    ],
-  },
-  {
-    id: 8,
-    text: "เมื่อแก้ปัญหา คุณมักเลือก…",
-    options: [
-      { label: "วิธีที่เคยใช้ได้ผลจริงมาก่อน", value: "S" },
-      { label: "แนวทางใหม่ๆ หรือไอเดียที่ยังไม่เคยลอง", value: "N" },
-    ],
-  },
-  {
-    id: 9,
-    text: "งานแบบไหนที่คุณถนัดมากกว่า",
-    options: [
-      { label: "งานที่มีขั้นตอนชัดเจน และเป้าหมายแน่นอน", value: "S" },
-      { label: "งานที่เปิดโอกาสให้คิดสร้างสรรค์และปรับเปลี่ยนได้", value: "N" },
-    ],
-  },
-  {
-    id: 10,
-    text: "คุณเชื่ออะไรมากกว่า",
-    options: [
-      { label: "ประสบการณ์จริงที่เห็นและจับต้องได้", value: "S" },
-      { label: "สัญชาตญาณและการคาดเดาแนวโน้ม", value: "N" },
-    ],
-  },
-
-  // T / F
-  {
-    id: 11,
-    text: "เมื่อต้องตัดสินใจเรื่องสำคัญ คุณมักจะ…",
-    options: [
-      { label: "ใช้เหตุผล ความถูกต้อง และความเป็นธรรม", value: "T" },
-      { label: "คำนึงถึงความรู้สึกของคนที่เกี่ยวข้อง", value: "F" },
-    ],
-  },
-  {
-    id: 12,
-    text: "ถ้าต้องวิจารณ์ผู้อื่น คุณจะ…",
-    options: [
-      { label: "พูดตรงไปตรงมาเพื่อให้เกิดการพัฒนา", value: "T" },
-      { label: "เลือกคำพูดที่ไม่ทำร้ายความรู้สึก", value: "F" },
-    ],
-  },
-  {
-    id: 13,
-    text: "สิ่งที่คุณให้ความสำคัญมากกว่าคือ",
-    options: [
-      { label: "ความยุติธรรมและหลักการ", value: "T" },
-      { label: "ความเข้าใจและความเห็นอกเห็นใจ", value: "F" },
-    ],
-  },
-  {
-    id: 14,
-    text: "เมื่อเกิดความขัดแย้ง คุณมักจะมองว่า",
-    options: [
-      { label: "ใครถูก ใครผิด ตามเหตุผล", value: "T" },
-      { label: "ใครรู้สึกอย่างไร และควรประนีประนอมอย่างไร", value: "F" },
-    ],
-  },
-  {
-    id: 15,
-    text: "คนรอบข้างมักมองว่าคุณเป็นคน",
-    options: [
-      { label: "มีเหตุผล จริงจัง และตรงไปตรงมา", value: "T" },
-      { label: "ใจดี อ่อนโยน และเข้าใจผู้อื่น", value: "F" },
-    ],
-  },
-
-  // J / P
-  {
-    id: 16,
-    text: "คุณรู้สึกสบายใจกว่าเมื่อ…",
-    options: [
-      { label: "ทุกอย่างถูกวางแผนไว้ล่วงหน้า", value: "J" },
-      { label: "สามารถเปลี่ยนแปลงได้ตามสถานการณ์", value: "P" },
-    ],
-  },
-  {
-    id: 17,
-    text: "ก่อนเริ่มทำงาน คุณมักจะ",
-    options: [
-      { label: "วางแผนให้ชัดเจนก่อนลงมือทำ", value: "J" },
-      { label: "เริ่มทำก่อนแล้วค่อยปรับไปตามทาง", value: "P" },
-    ],
-  },
-  {
-    id: 18,
-    text: "เส้นตาย (Deadline) สำหรับคุณคือ…",
-    options: [
-      { label: "สิ่งที่ควรทำให้เสร็จก่อนเวลา", value: "J" },
-      { label: "แรงกระตุ้นให้ทำงานได้ดีขึ้น", value: "P" },
-    ],
-  },
-  {
-    id: 19,
-    text: "ตารางชีวิตประจำวันของคุณ",
-    options: [
-      { label: "ค่อนข้างแน่นอนและเป็นระบบ", value: "J" },
-      { label: "ยืดหยุ่น เปลี่ยนแปลงได้", value: "P" },
-    ],
-  },
-  {
-    id: 20,
-    text: "เมื่อมีแผนกะทันหันเกิดขึ้น คุณมักจะ",
-    options: [
-      { label: "รู้สึกไม่ค่อยสบายใจ ต้องตั้งหลัก", value: "J" },
-      { label: "รู้สึกตื่นเต้นและพร้อมปรับตัว", value: "P" },
-    ],
-  },
-];
-
-/* ================= COMPONENT ================= */
 export default function FormMbti() {
   const [answers, setAnswers] = useState({});
+  const navigate = useNavigate();
 
   const handleChange = (qid, value) => {
     setAnswers((prev) => ({ ...prev, [qid]: value }));
   };
 
   const calculateMbti = () => {
-    const score = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+    const score = {
+      E: 0, I: 0,
+      S: 0, N: 0,
+      T: 0, F: 0,
+      J: 0, P: 0,
+    };
+
     Object.values(answers).forEach((v) => score[v]++);
-    return (
+
+    const type =
       (score.E >= score.I ? "E" : "I") +
       (score.S >= score.N ? "S" : "N") +
       (score.T >= score.F ? "T" : "F") +
-      (score.J >= score.P ? "J" : "P")
-    );
+      (score.J >= score.P ? "J" : "P");
+
+    return { type, score };
+  };
+
+  const handleSubmit = () => {
+    const result = calculateMbti();
+
+    navigate(`/mbti/${result.type.toLowerCase()}`, {
+      state: { score: result.score },
+    });
   };
 
   return (
     <div className="mbti-container">
-      {/* ===== Header ===== */}
       <div className="mbti-header">
         <h1 className="mbti-title">แบบสอบถามบุคลิกภาพ MBTI</h1>
         <p className="mbti-subtitle">
@@ -200,8 +47,7 @@ export default function FormMbti() {
         </p>
       </div>
 
-      {/* ===== Questions ===== */}
-      {questions.map((q, index) => (
+      {mbtiQuestions.map((q, index) => (
         <div key={q.id} className="question-card">
           <p className="question-title">
             {index + 1}. {q.text}
@@ -223,8 +69,8 @@ export default function FormMbti() {
 
       <button
         className="submit-btn"
-        disabled={Object.keys(answers).length < questions.length}
-        onClick={() => alert(`ผล MBTI ของคุณคือ ${calculateMbti()}`)}
+        disabled={Object.keys(answers).length < mbtiQuestions.length}
+        onClick={handleSubmit}
       >
         ดูผลลัพธ์
       </button>

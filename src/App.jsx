@@ -9,6 +9,7 @@ import FormMbti from "./Formmbti";
 import Aptitude from "./Aptitude";
 import BasicKnowledge from "./BasicKnowledge";
 import { ProgressProvider } from "./context/ProgressContext";
+import MBTIResult from "./MBTIResult";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/formmbti" element={<FormMbti />} />
           <Route path="/aptitude" element={<Aptitude />} />
           <Route path="/basicknowledge" element={<BasicKnowledge />} />
+          <Route path="/mbti/:type" element={<MBTIResult />} />
         </Routes>
       </ProgressProvider>
     </Router>
