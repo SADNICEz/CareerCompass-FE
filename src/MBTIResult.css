@@ -1,0 +1,213 @@
+.result-container {
+  background: #f4fbf9;
+  min-height: 100vh;
+  padding: 80px 10%;
+  font-family: "Prompt", sans-serif;
+}
+
+/* HERO */
+.result-hero {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.hero-image-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.result-hero img {
+  width: 100%;
+  max-width: 650px;
+  border-radius: 25px;
+  transform: translateX(8px); /* ขยับไปขวา */
+}
+
+.result-hero h1 {
+  font-size: 3.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 14px;
+}
+
+.subtitle {
+  color: #ffffff;
+  font-size: 1.5rem;
+}
+
+/* ================= CARD ================= */
+
+.card {
+  background: white;
+  padding: 40px;
+  border-radius: 25px;
+  margin-bottom: 35px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* SECTION TITLE */
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+/* 🔥 เพิ่มขนาดรูป +0.3rem */
+.section-icon {
+  height: 4rem;   /* เดิม 1.9rem → เพิ่ม 0.3 */
+  width: auto;
+  object-fit: contain;
+}
+
+/* HEADINGS */
+
+.card h2 {
+  font-size: 1.9rem;
+  margin: 0;
+}
+
+.card h3 {
+  font-size: 1.7rem;
+  margin: 0;
+}
+
+/* TEXT */
+
+.card p {
+  font-size: 1.3rem;
+  line-height: 1.6;
+}
+
+.card ul {
+  padding-left: 22px;
+}
+
+.card li {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+}
+
+/* ================= GRID ================= */
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 35px;
+}
+
+/* ================= TRAITS ================= */
+
+.trait {
+  margin-bottom: 24px;
+}
+
+.trait span {
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 14px;
+  background: #e5e7eb;
+  border-radius: 20px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 20px;
+  transition: width 0.6s ease;
+}
+
+/* ================= BUTTONS (Match Home Page) ================= */
+
+.button-group {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.btn-primary {
+  background: #ff6b00;
+  color: #ffffff;
+  border: none;
+  padding: 10px 28px;      /* เท่าหน้า Home */
+  border-radius: 20px;     /* เท่าหน้า Home */
+  font-weight: 700;        /* เท่าหน้า Home */
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-outline {
+  border: 2px solid #ff6b00;
+  background: #ffffff;
+  color: #ff6b00;
+  padding: 10px 28px;      /* เท่าหน้า Home */
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  margin-right: 10px;
+}
+
+.btn-outline:hover {
+  opacity: 0.9;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 1024px) {
+  .result-hero h1 {
+    font-size: 2.8rem;
+  }
+
+  .subtitle {
+    font-size: 1.3rem;
+  }
+
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .result-container {
+    padding: 60px 6%;
+  }
+
+  .result-hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+  }
+
+  .card h2 {
+    font-size: 1.5rem;
+  }
+
+  .card h3 {
+    font-size: 1.3rem;
+  }
+
+  .card p,
+  .card li,
+  .trait span {
+    font-size: 1rem;
+  }
+}
