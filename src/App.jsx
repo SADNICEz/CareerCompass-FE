@@ -8,6 +8,8 @@ import Home from "./Home";
 import FormMbti from "./Formmbti";
 import Aptitude from "./Aptitude";
 import BasicKnowledge from "./BasicKnowledge";
+import CareerList from "./Careerlist";
+import { UserProvider } from "./context/UserContext";
 import LearningPath from "./LearningPath";
 import { ProgressProvider } from "./context/ProgressContext";
 import MBTIResult from "./MBTIResult";
@@ -15,21 +17,23 @@ import MBTIResult from "./MBTIResult";
 function App() {
   return (
     <Router>
-      <ProgressProvider>
-        <Navbar />
-
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<Auth />} />
-          <Route path="/register" element={<Auth />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/formmbti" element={<FormMbti />} />
-          <Route path="/aptitude" element={<Aptitude />} />
-          <Route path="/basicknowledge" element={<BasicKnowledge />} />
-          <Route path="/learningpath" element={<LearningPath />} />
-          <Route path="/mbti/:type" element={<MBTIResult />} />
-        </Routes>
-      </ProgressProvider>
+      <UserProvider>
+        <ProgressProvider>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<Auth />} />
+            <Route path="/register" element={<Auth />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/formmbti" element={<FormMbti />} />
+            <Route path="/aptitude" element={<Aptitude />} />
+            <Route path="/basicknowledge" element={<BasicKnowledge />} />
+            <Route path="/learningpath" element={<LearningPath />} />
+            <Route path="/mbti/:type" element={<MBTIResult />} />
+            <Route path="/career-list" element={<CareerList />} />
+          </Routes>
+        </ProgressProvider>
+      </UserProvider>
     </Router>
   );
 }

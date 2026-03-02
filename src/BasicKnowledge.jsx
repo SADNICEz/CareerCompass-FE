@@ -1,4 +1,6 @@
+import { useState } from "react"; 
 import { useNavigate } from "react-router-dom";
+import { useUser } from "./context/UserContext.jsx"; 
 import "./BasicKnowledge.css";
 
 import formIcon from "./assets/form.png";
@@ -7,6 +9,45 @@ import learningIcon from "./assets/learning.png";
 
 function BasicKnowledge() {
   const navigate = useNavigate();
+  const { userData, updateUserData } = useUser();
+  const [textInput, setTextInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleConfirm = async () => {
+    const finalPayload = {
+      mbti: userData.mbti,
+      aptitude: userData.aptitudeScores,
+      knowledge: textInput, 
+    };
+
+    console.log("กำลังส่งข้อมูลไป Backend:", finalPayload);
+    setIsLoading(true);
+
+    try {
+      // 2. ยิง API ไปหา Backend (สมมติว่า Backend รันที่ port 3000)
+      const response = await fetch("http://localhost:4546/api/career-recommend", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(finalPayload),
+      });
+
+      const data = await response.json();
+      
+      // 3. (Optional) บันทึกผลลัพธ์ที่ได้จาก AI ลง Context เพื่อเอาไปโชว์หน้าถัดไป
+      // updateUserData("results", data.recommended_careers);
+
+      // 4. ไปหน้าผลลัพธ์
+      navigate("/career-list", { state: { result: data } }); // ส่งผลลัพธ์ไปผ่าน state ของ router ก็ได้
+
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("เกิดข้อผิดพลาดในการเชื่อมต่อกับ AI");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const skills = [
     "Hard Skill",
@@ -26,7 +67,7 @@ function BasicKnowledge() {
       {/* ================= Progress (ยังอยู่ Step แบบสอบถาม) ================= */}
       <div className="progress-container">
         <div className="progress-line">
-          {/* ✅ ใกล้จบแบบสอบถาม แต่ยังไม่ข้าม step */}
+          {/*  ใกล้จบแบบสอบถาม แต่ยังไม่ข้าม step */}
           <div className="progress-line-fill progress-30" />
         </div>
 
@@ -73,21 +114,26 @@ function BasicKnowledge() {
         <textarea
           className="knowledge-textarea"
           placeholder="บอกเราเกี่ยวกับความรู้และทักษะที่คุณมี เช่น พื้นฐาน Python และ Data Analysis เคยใช้งาน Excel และ SQL หรือ สนใจด้าน AI และ Machine Learning"
+          value={textInput}
+          onChange={(e) => setTextInput(e.target.value)}
+          disabled={isLoading}
         />
 
         <div className="knowledge-footer">
-          <button
+          <button 
             className="back-btn"
             onClick={() => navigate("/Aptitude")}
+            disabled={isLoading}
           >
             ย้อนกลับ
           </button>
 
           <button
-            className="confirm-btn"
-            onClick={() => navigate("/ai-career")}
+            className="confirm-btn" 
+            onClick={handleConfirm}
+            disabled={isLoading}
           >
-            ยืนยัน
+            {isLoading ? "กำลังประมวลผล..." : "ยืนยัน"}
           </button>
         </div>
       </div>
