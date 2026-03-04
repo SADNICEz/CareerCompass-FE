@@ -87,6 +87,10 @@ function Auth() {
     event.preventDefault();
     setRegisterError('');
 
+    if (registerForm.password.length < 8) {
+      setRegisterError('Password must be at least 8 characters');
+      return;
+    }
 
     if (registerForm.password !== registerForm.confirm_password) {
       setRegisterError('Passwords do not match');
@@ -96,12 +100,20 @@ function Auth() {
     setRegisterLoading(true);
 
     try {
+      // ส่ง gender เป็น null ถ้าไม่ได้เลือก (ไม่ส่ง empty string เพราะ backend ต้องการ *Gender)
+      const body = {
+        email: registerForm.email,
+        password: registerForm.password,
+        confirm_password: registerForm.confirm_password,
+        gender: registerForm.gender || null,
+      };
+
       const res = await fetch(`${API_URL}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(registerForm),
+        body: JSON.stringify(body),
       });
 
       const raw = await res.text();
@@ -109,7 +121,7 @@ function Auth() {
 
       const data = raw ? JSON.parse(raw) : {};
       if (!res.ok) {
-        throw new Error(data.error || 'Request failed');
+        throw new Error(data.error || 'Registration failed');
       }
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));

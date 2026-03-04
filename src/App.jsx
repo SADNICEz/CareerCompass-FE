@@ -29,6 +29,7 @@ function App() {
             <Route path="/aptitude" element={<Aptitude />} />
             <Route path="/basicknowledge" element={<BasicKnowledge />} />
             <Route path="/learningpath" element={<LearningPath />} />
+            <Route path="/learningpath/:careerSlug" element={<LearningPath />} />
             <Route path="/mbti/:type" element={<MBTIResult />} />
             <Route path="/career-list" element={<CareerList />} />
           </Routes>

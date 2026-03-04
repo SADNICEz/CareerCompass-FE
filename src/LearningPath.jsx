@@ -1,32 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './LearningPath.css';
 
 const API_BASE = 'http://localhost:4546/api';
 
 const LearningPath = () => {
     const navigate = useNavigate();
+    const { careerSlug } = useParams(); // รับ slug จาก URL เช่น /learningpath/data-scientist
     const [learningPath, setLearningPath] = useState(null);
     const [selectedStage, setSelectedStage] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [updatingProgress, setUpdatingProgress] = useState(false);
 
-    // Get user_id from localStorage (ถ้ามีระบบ login)
+    // Get user info from localStorage
     const userId = localStorage.getItem('user_id') || null;
+    const storedUser = localStorage.getItem('user');
+    const parsedUser = storedUser ? JSON.parse(storedUser) : null;
+    const userIdFromToken = parsedUser?.id || userId;
 
     useEffect(() => {
-        fetchLearningPath();
-    }, []);
+        if (careerSlug) {
+            fetchLearningPath();
+        }
+    }, [careerSlug]);
 
     const fetchLearningPath = async () => {
         try {
             setLoading(true);
             setError(null);
-            const url = userId
-                ? `${API_BASE}/learning-path/Data Scientist?user_id=${userId}`
-                : `${API_BASE}/learning-path/Data Scientist`;
-            const res = await fetch(encodeURI(url));
+
+            // ใช้ careerSlug จาก URL params — decode เผื่อมี space
+            const slug = decodeURIComponent(careerSlug || 'Data Scientist');
+            const url = userIdFromToken
+                ? `${API_BASE}/learning-path/${encodeURIComponent(slug)}?user_id=${userIdFromToken}`
+                : `${API_BASE}/learning-path/${encodeURIComponent(slug)}`;
+
+            const res = await fetch(url);
             if (!res.ok) throw new Error(`Server error: ${res.status}`);
             const data = await res.json();
             setLearningPath(data);
@@ -41,14 +51,14 @@ const LearningPath = () => {
     };
 
     const handleUpdateProgress = async (stageId, newStatus) => {
-        if (!userId) return;
+        if (!userIdFromToken) return;
         try {
             setUpdatingProgress(true);
             const res = await fetch(`${API_BASE}/learning-path/progress`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    user_id: userId,
+                    user_id: userIdFromToken,
                     stage_id: stageId,
                     status: newStatus,
                 }),
