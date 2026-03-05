@@ -694,8 +694,32 @@
 /* ── Footer ───────────────────────────────── */
 .courses-footer {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 1.75rem;
+  gap: .75rem;
+}
+
+.quiz-nav-button {
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  color: white;
+  border: none;
+  padding: .45rem 1.35rem;
+  border-radius: var(--radius-sm);
+  font-size: .82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition);
+  letter-spacing: .01em;
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  box-shadow: 0 4px 14px rgba(124, 58, 237, .3);
+}
+
+.quiz-nav-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(124, 58, 237, .45);
 }
 
 .view-all-button {

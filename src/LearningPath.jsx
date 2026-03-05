@@ -264,6 +264,25 @@ const LearningPath = () => {
                                 >
                                     ← กลับหน้าหลัก
                                 </button>
+                                <button
+                                    className="quiz-nav-button"
+                                    onClick={() =>
+                                        navigate(
+                                            `/quiz/${encodeURIComponent(careerSlug || 'general')}/${selectedStage.id}`,
+                                            {
+                                                state: {
+                                                    careerName: learningPath.career_name,
+                                                    stageName: selectedStage.title,
+                                                    stageSubtitle: selectedStage.subtitle,
+                                                    stageId: selectedStage.id,
+                                                    careerSlug: careerSlug,
+                                                },
+                                            }
+                                        )
+                                    }
+                                >
+                                    📝 ทำแบบทดสอบ
+                                </button>
                             </div>
                         </div>
                     )}
