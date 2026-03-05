@@ -132,10 +132,6 @@ const LearningPath = () => {
                             <span className="stat-number">{learningPath.completed_stages}</span>
                             <span className="stat-label">ด่านที่เสร็จสิ้น</span>
                         </div>
-                        <div className="stat-card stat-card-accent">
-                            <span className="stat-number">{getProgressPercent()}%</span>
-                            <span className="stat-label">ความสำเร็จ</span>
-                        </div>
                     </div>
                     <div className="progress-bar-container">
                         <div className="progress-label">
