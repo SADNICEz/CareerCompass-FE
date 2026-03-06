@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useProgress } from "./context/ProgressContext";
+import { useUser } from "./context/UserContext";
 import "./Home.css";
 
 import formIcon from "./assets/form.png";
@@ -20,9 +21,11 @@ function Home() {
 
   // 🔹 ดึง progress จาก Context (คำนวณให้แล้ว)
   const { visualProgress } = useProgress();
+  const { updateUserData } = useUser();
 
   const handleNext = () => {
     if (!selected) return;
+    updateUserData("mbti", selected);
     navigate("/aptitude");
   };
 
