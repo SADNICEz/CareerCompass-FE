@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./QuizResult.css";
+
+const API_BASE = "http://localhost:4546/api";
 
 function QuizResult() {
     const location = useLocation();
     const navigate = useNavigate();
+    const [completing, setCompleting] = useState(false);
 
     const result = location.state;
 
@@ -34,10 +38,33 @@ function QuizResult() {
     const isPerfect = correctCount === totalQuestions;
     const headline = isPerfect ? "ยอดเยี่ยม! เก่งมาก! 🎉" : "ลองใหม่อีกครั้ง! 💪";
     const summary = `คุณทำข้อสอบได้ ${correctCount} จาก ${totalQuestions} ข้อ (${progress}%)`;
-    const primaryButtonText = isPerfect ? "กลับไป Learning Path" : "ทำแบบทดสอบใหม่";
+    const primaryButtonText = isPerfect ? "ไปด่านต่อไป 🚀" : "ทำแบบทดสอบใหม่";
 
-    const handlePrimaryAction = () => {
+    const handlePrimaryAction = async () => {
         if (isPerfect) {
+            // Get userId from localStorage
+            const storedUser = localStorage.getItem("user");
+            const parsedUser = storedUser ? JSON.parse(storedUser) : null;
+            const userId = parsedUser?.id || localStorage.getItem("user_id");
+
+            if (userId && stageId) {
+                try {
+                    setCompleting(true);
+                    await fetch(`${API_BASE}/learning-path/complete-stage`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            user_id: userId,
+                            stage_id: stageId,
+                            career_name: careerName || decodeURIComponent(careerSlug || ""),
+                        }),
+                    });
+                } catch (_) {
+                    // ถ้า API ล้มเหลว ยังคง navigate ได้
+                } finally {
+                    setCompleting(false);
+                }
+            }
             navigate(`/learningpath/${careerSlug || ""}`);
         } else {
             navigate(`/quiz/${encodeURIComponent(careerSlug || "general")}/${stageId}`, {
@@ -113,8 +140,13 @@ function QuizResult() {
                     </div>
 
                     <div className="quiz-result-actions">
-                        <button type="button" className="quiz-result-btn primary" onClick={handlePrimaryAction}>
-                            {primaryButtonText}
+                        <button
+                            type="button"
+                            className="quiz-result-btn primary"
+                            onClick={handlePrimaryAction}
+                            disabled={completing}
+                        >
+                            {completing ? "กำลังบันทึก..." : primaryButtonText}
                         </button>
                         <button
                             type="button"

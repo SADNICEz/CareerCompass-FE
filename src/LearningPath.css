@@ -485,11 +485,19 @@
 .courses-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 1.5rem;
   gap: 1rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid rgba(255, 195, 120, .25);
+}
+
+.courses-header-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: .55rem;
+  flex-shrink: 0;
 }
 
 .courses-title {
@@ -694,7 +702,7 @@
 /* ── Footer ───────────────────────────────── */
 .courses-footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   margin-top: 1.75rem;
   gap: .75rem;
@@ -743,6 +751,30 @@
   color: white;
   border-color: transparent;
   box-shadow: 0 4px 14px rgba(255, 107, 53, .35);
+}
+
+.cancel-path-button {
+  border: 2px solid rgba(220, 38, 38, .45);
+  color: #dc2626;
+  padding: .45rem 1.35rem;
+  border-radius: var(--radius-sm);
+  font-size: .82rem;
+  font-weight: 700;
+  background: transparent;
+  cursor: pointer;
+  transition: all var(--transition);
+  letter-spacing: .01em;
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+}
+
+.cancel-path-button:hover {
+  background: linear-gradient(135deg, #dc2626, #ef4444);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, .35);
+  transform: translateY(-2px);
 }
 
 /* ── Responsive ───────────────────────────── */

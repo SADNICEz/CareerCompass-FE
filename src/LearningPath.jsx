@@ -194,9 +194,30 @@ const LearningPath = () => {
                                     <h2 className="courses-title">{selectedStage.title}</h2>
                                     <p className="courses-subtitle">{selectedStage.subtitle}</p>
                                 </div>
-                                <span className={`courses-status-badge ${selectedStage.status}`}>
-                                    {getStatusLabel(selectedStage.status)}
-                                </span>
+                                <div className="courses-header-actions">
+                                    <span className={`courses-status-badge ${selectedStage.status}`}>
+                                        {getStatusLabel(selectedStage.status)}
+                                    </span>
+                                    <button
+                                        className="quiz-nav-button"
+                                        onClick={() =>
+                                            navigate(
+                                                `/quiz/${encodeURIComponent(careerSlug || 'general')}/${selectedStage.id}`,
+                                                {
+                                                    state: {
+                                                        careerName: learningPath.career_name,
+                                                        stageName: selectedStage.title,
+                                                        stageSubtitle: selectedStage.subtitle,
+                                                        stageId: selectedStage.id,
+                                                        careerSlug: careerSlug,
+                                                    },
+                                                }
+                                            )
+                                        }
+                                    >
+                                        📝 ทำแบบทดสอบ
+                                    </button>
+                                </div>
                             </div>
 
                             {/* Progress actions (only if user logged in) */}
@@ -259,29 +280,10 @@ const LearningPath = () => {
 
                             <div className="courses-footer">
                                 <button
-                                    className="view-all-button"
+                                    className="cancel-path-button"
                                     onClick={() => navigate('/home')}
                                 >
-                                    ← กลับหน้าหลัก
-                                </button>
-                                <button
-                                    className="quiz-nav-button"
-                                    onClick={() =>
-                                        navigate(
-                                            `/quiz/${encodeURIComponent(careerSlug || 'general')}/${selectedStage.id}`,
-                                            {
-                                                state: {
-                                                    careerName: learningPath.career_name,
-                                                    stageName: selectedStage.title,
-                                                    stageSubtitle: selectedStage.subtitle,
-                                                    stageId: selectedStage.id,
-                                                    careerSlug: careerSlug,
-                                                },
-                                            }
-                                        )
-                                    }
-                                >
-                                    📝 ทำแบบทดสอบ
+                                    ยกเลิกเส้นทาง
                                 </button>
                             </div>
                         </div>
