@@ -16,6 +16,7 @@ import { UserProvider } from "./context/UserContext";
 import LearningPath from "./LearningPath";
 import { ProgressProvider } from "./context/ProgressContext";
 import MBTIResult from "./MBTIResult";
+import Congratulation from "./Congratulation";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
             <Route path="/quiz" element={<Quiz />} />
             <Route path="/quiz-result" element={<QuizResult />} />
             <Route path="/career-list" element={<CareerList />} />
+            <Route path="/congratulation" element={<Congratulation />} />
           </Routes>
         </ProgressProvider>
       </UserProvider>

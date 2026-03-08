@@ -27,7 +27,7 @@
   margin-bottom: 26px;
   color: #666;
   font-size: 15px;
-  text-align: center; 
+  text-align: center;
 }
 
 /* ===============================
@@ -44,12 +44,12 @@
 .skill-box {
   padding: 10px 16px;
   border: 2px solid #ff6b00;
-  border-radius: 6px;           
+  border-radius: 6px;
   background: #f7e8dc;
   color: #ff6b00;
   font-weight: 600;
   font-size: 14px;
-  cursor: default;             
+  cursor: default;
   user-select: none;
   letter-spacing: 0.2px;
 }
@@ -80,7 +80,7 @@
 ================================ */
 .knowledge-footer {
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
   align-items: center;
 }
 

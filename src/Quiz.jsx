@@ -150,6 +150,8 @@ function Quiz() {
                 stageName,
                 careerSlug,
                 stageId,
+                isLastStage: state?.isLastStage,
+                totalStages: state?.totalStages,
             },
         });
     };

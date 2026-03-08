@@ -1,0 +1,179 @@
+.congrats-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at top left, #1a1a2e, #16213e);
+    position: relative;
+    overflow: hidden;
+    font-family: 'Inter', 'Prompt', sans-serif;
+    padding: 20px;
+}
+
+.congrats-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(rgba(255, 107, 0, 0.1) 1px, transparent 1px),
+        radial-gradient(rgba(255, 107, 0, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: 0 0, 25px 25px;
+    opacity: 0.5;
+    z-index: 0;
+}
+
+.congrats-main {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 600px;
+    animation: fadeInScale 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.congrats-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    padding: 60px 40px;
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                0 0 40px rgba(255, 107, 0, 0.1);
+}
+
+.congrats-icon-container {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, #ff6b00, #ff8c00);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 30px;
+    box-shadow: 0 10px 30px rgba(255, 107, 0, 0.3),
+                inset 0 0 20px rgba(255, 255, 255, 0.3);
+    animation: bounceIcon 2s infinite ease-in-out;
+}
+
+@keyframes bounceIcon {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.congrats-icon {
+    font-size: 60px;
+}
+
+.congrats-title {
+    font-size: 36px;
+    color: #fff;
+    margin-bottom: 20px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.congrats-desc {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+.career-highlight {
+    color: #ff6b00;
+    font-weight: 700;
+}
+
+.congrats-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 40px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 25px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.congrats-stat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.stat-icon {
+    font-size: 20px;
+}
+
+.stat-text {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.congrats-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.congrats-btn {
+    padding: 16px 32px;
+    border-radius: 16px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.congrats-btn.primary {
+    background: linear-gradient(90deg, #ff6b00, #ff8c00);
+    color: white;
+    box-shadow: 0 10px 20px rgba(255, 107, 0, 0.2);
+}
+
+.congrats-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(255, 107, 0, 0.3);
+    background: linear-gradient(90deg, #ff7b1a, #ff9c1a);
+}
+
+.congrats-btn.secondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.congrats-btn.secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 480px) {
+    .congrats-card {
+        padding: 40px 24px;
+    }
+    .congrats-title {
+        font-size: 28px;
+    }
+    .congrats-desc {
+        font-size: 16px;
+    }
+}

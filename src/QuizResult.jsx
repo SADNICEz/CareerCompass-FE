@@ -33,12 +33,15 @@ function QuizResult() {
         totalQuestions, correctCount, incorrectCount,
         progress, elapsedMinutes,
         careerName, stageName, careerSlug, stageId,
+        isLastStage, totalStages
     } = result;
 
     const isPerfect = correctCount === totalQuestions;
     const headline = isPerfect ? "ยอดเยี่ยม! เก่งมาก! 🎉" : "ลองใหม่อีกครั้ง! 💪";
     const summary = `คุณทำข้อสอบได้ ${correctCount} จาก ${totalQuestions} ข้อ (${progress}%)`;
-    const primaryButtonText = isPerfect ? "ไปด่านต่อไป 🚀" : "ทำแบบทดสอบใหม่";
+    const primaryButtonText = isPerfect 
+        ? (isLastStage ? "เสร็จสมบูรณ์ 🎉" : "ไปด่านต่อไป 🚀") 
+        : "ทำแบบทดสอบใหม่";
 
     const handlePrimaryAction = async () => {
         if (isPerfect) {
@@ -65,7 +68,12 @@ function QuizResult() {
                     setCompleting(false);
                 }
             }
-            navigate(`/learningpath/${careerSlug || ""}`);
+            
+            if (isLastStage) {
+                navigate("/congratulation", { state: { careerName, careerSlug } });
+            } else {
+                navigate(`/learningpath/${careerSlug || ""}`);
+            }
         } else {
             navigate(`/quiz/${encodeURIComponent(careerSlug || "general")}/${stageId}`, {
                 state: { careerName, stageName, careerSlug, stageId },
