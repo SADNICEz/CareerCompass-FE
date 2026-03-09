@@ -64,6 +64,22 @@ const LearningPath = () => {
                 }),
             });
             if (!res.ok) throw new Error('Failed to update progress');
+
+            // Construct URL to fetch updated the data
+            const slug = decodeURIComponent(careerSlug || 'Data Scientist');
+            const url = userIdFromToken
+                ? `${API_BASE}/learning-path/${encodeURIComponent(slug)}?user_id=${userIdFromToken}`
+                : `${API_BASE}/learning-path/${encodeURIComponent(slug)}`;
+            
+            const updatedRes = await fetch(url);
+            if (updatedRes.ok) {
+                const newData = await updatedRes.json();
+                setLearningPath(newData);
+                if (newData.completed_stages === newData.total_stages && newData.total_stages > 0) {
+                    navigate('/congratulation', { state: { careerName: newData.career_name, careerSlug } });
+                    return;
+                }
+            }
             await fetchLearningPath();
         } catch (err) {
             alert('ไม่สามารถอัปเดต progress ได้: ' + err.message);
@@ -210,12 +226,14 @@ const LearningPath = () => {
                                                         stageSubtitle: selectedStage.subtitle,
                                                         stageId: selectedStage.id,
                                                         careerSlug: careerSlug,
+                                                        isLastStage: learningPath.stages[learningPath.stages.length - 1].id === selectedStage.id,
+                                                        totalStages: learningPath.total_stages,
                                                     },
                                                 }
                                             )
                                         }
                                     >
-                                        📝 ทำแบบทดสอบ
+                                        ทำแบบทดสอบ
                                     </button>
                                 </div>
                             </div>

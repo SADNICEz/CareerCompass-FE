@@ -33,16 +33,26 @@ function QuizResult() {
         totalQuestions, correctCount, incorrectCount,
         progress, elapsedMinutes,
         careerName, stageName, careerSlug, stageId,
+        isLastStage, totalStages,
+        passed, passScore,
     } = result;
 
-    const isPerfect = correctCount === totalQuestions;
-    const headline = isPerfect ? "ยอดเยี่ยม! เก่งมาก! 🎉" : "ลองใหม่อีกครั้ง! 💪";
-    const summary = `คุณทำข้อสอบได้ ${correctCount} จาก ${totalQuestions} ข้อ (${progress}%)`;
-    const primaryButtonText = isPerfect ? "ไปด่านต่อไป 🚀" : "ทำแบบทดสอบใหม่";
+    // ใช้ passed (≥8/10) แทน isPerfect (10/10)
+    const hasPassed = passed ?? (correctCount === totalQuestions);
+    const requiredPass = passScore ?? 8;
+
+    const headline = hasPassed
+        ? "ยอดเยี่ยม! ผ่านแล้ว! 🎉"
+        : `ยังไม่ผ่าน ต้องได้ ${requiredPass}/${totalQuestions} ข้อขึ้นไป 💪`;
+
+    const summary = `คุณตอบถูก ${correctCount} จาก ${totalQuestions} ข้อ (${progress}%)`;
+
+    const primaryButtonText = hasPassed
+        ? (isLastStage ? "เสร็จสมบูรณ์ 🎉" : "ไปด่านต่อไป 🚀")
+        : "ทำแบบทดสอบใหม่";
 
     const handlePrimaryAction = async () => {
-        if (isPerfect) {
-            // Get userId from localStorage
+        if (hasPassed) {
             const storedUser = localStorage.getItem("user");
             const parsedUser = storedUser ? JSON.parse(storedUser) : null;
             const userId = parsedUser?.id || localStorage.getItem("user_id");
@@ -65,10 +75,16 @@ function QuizResult() {
                     setCompleting(false);
                 }
             }
-            navigate(`/learningpath/${careerSlug || ""}`);
+
+            if (isLastStage) {
+                navigate("/congratulation", { state: { careerName, careerSlug } });
+            } else {
+                navigate(`/learningpath/${careerSlug || ""}`);
+            }
         } else {
+            // Retry quiz — navigate back to quiz (backend will generate new questions)
             navigate(`/quiz/${encodeURIComponent(careerSlug || "general")}/${stageId}`, {
-                state: { careerName, stageName, careerSlug, stageId },
+                state: { careerName, stageName, careerSlug, stageId, isLastStage, totalStages },
             });
         }
     };
@@ -98,12 +114,23 @@ function QuizResult() {
                 <section className="quiz-result-card">
                     <div className="quiz-result-top">
                         <div className="quiz-result-icon">
-                            <span style={{ fontSize: 40 }}>{isPerfect ? "🏆" : "📝"}</span>
+                            <span style={{ fontSize: 40 }}>{hasPassed ? "🏆" : "📝"}</span>
                         </div>
 
                         <div className="quiz-result-overview">
                             <h2>{headline}</h2>
                             <p>{summary}</p>
+
+                            {/* Pass threshold indicator */}
+                            <div className="quiz-pass-threshold">
+                                <span
+                                    className={`quiz-pass-badge-result ${hasPassed ? "pass" : "fail"}`}
+                                >
+                                    {hasPassed
+                                        ? `✅ ผ่านเกณฑ์ (${correctCount}/${totalQuestions})`
+                                        : `❌ ไม่ผ่านเกณฑ์ — ต้องได้ ${requiredPass}/${totalQuestions} ขึ้นไป`}
+                                </span>
+                            </div>
 
                             <div className="quiz-progress-label-row">
                                 <span>คะแนน</span>

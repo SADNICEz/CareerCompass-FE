@@ -1,123 +1,70 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import "./Quiz.css";
 
-// ── Quiz bank per stage (fallback to general if no match) ────────────
-const quizBank = {
-    default: [
-        {
-            question: "Python คืออะไร?",
-            options: ["ภาษาโปรแกรมมิ่ง", "ฐานข้อมูล", "ระบบปฏิบัติการ", "เว็บเบราว์เซอร์"],
-            answer: "ภาษาโปรแกรมมิ่ง",
-        },
-        {
-            question: "Machine Learning คืออะไร?",
-            options: ["การเรียนรู้ของเครื่องจักร", "การสอนคอมพิวเตอร์", "ระบบปฏิบัติการ", "โปรแกรมคำนวณ"],
-            answer: "การเรียนรู้ของเครื่องจักร",
-        },
-        {
-            question: "VS Code คืออะไร?",
-            options: ["ระบบปฏิบัติการ", "โปรแกรมแอนตี้ไวรัส", "Code editor", "ฐานข้อมูล"],
-            answer: "Code editor",
-        },
-    ],
-    foundations: [
-        {
-            question: "อัลกอริทึม (Algorithm) คืออะไร?",
-            options: ["ชุดคำสั่งที่กำหนดขั้นตอนการแก้ปัญหา", "ภาษาโปรแกรม", "ฮาร์ดแวร์คอมพิวเตอร์", "ระบบปฏิบัติการ"],
-            answer: "ชุดคำสั่งที่กำหนดขั้นตอนการแก้ปัญหา",
-        },
-        {
-            question: "ตัวแปร (Variable) ในโปรแกรมมิ่งคืออะไร?",
-            options: ["ที่เก็บข้อมูลชั่วคราวในหน่วยความจำ", "ฟังก์ชัน", "ลูป", "คลาส"],
-            answer: "ที่เก็บข้อมูลชั่วคราวในหน่วยความจำ",
-        },
-        {
-            question: "Loop ใช้สำหรับอะไร?",
-            options: ["ทำซ้ำชุดคำสั่ง", "ประกาศตัวแปร", "Import library", "สร้าง Database"],
-            answer: "ทำซ้ำชุดคำสั่ง",
-        },
-    ],
-    "data-analysis": [
-        {
-            question: "Pandas ใน Python ใช้สำหรับอะไร?",
-            options: ["จัดการข้อมูลเชิงตาราง", "สร้าง UI", "เขียน API", "เชื่อมต่อ Database"],
-            answer: "จัดการข้อมูลเชิงตาราง",
-        },
-        {
-            question: "Mean (ค่าเฉลี่ย) คำนวณอย่างไร?",
-            options: ["ผลรวมทั้งหมด ÷ จำนวน", "ค่าที่เกิดบ่อยที่สุด", "ค่ากลางของข้อมูล", "ค่าสูงสุด - ค่าต่ำสุด"],
-            answer: "ผลรวมทั้งหมด ÷ จำนวน",
-        },
-        {
-            question: "Outlier คืออะไร?",
-            options: ["ค่าผิดปกติที่อยู่ห่างจากกลุ่มข้อมูล", "ค่าเฉลี่ย", "ค่ามัธยฐาน", "ค่าฐานนิยม"],
-            answer: "ค่าผิดปกติที่อยู่ห่างจากกลุ่มข้อมูล",
-        },
-    ],
-    "machine-learning": [
-        {
-            question: "Supervised Learning คืออะไร?",
-            options: ["การเรียนรู้จากข้อมูลที่มี label", "การเรียนรู้โดยไม่มี label", "การเรียนรู้จากรางวัล", "การเรียนรู้แบบลึก"],
-            answer: "การเรียนรู้จากข้อมูลที่มี label",
-        },
-        {
-            question: "Overfitting คืออะไร?",
-            options: ["โมเดลจำข้อมูล train มากเกินไป", "โมเดลที่ดี", "ข้อมูลไม่พอ", "Learning rate สูงเกิน"],
-            answer: "โมเดลจำข้อมูล train มากเกินไป",
-        },
-        {
-            question: "Feature ในบริบท ML คืออะไร?",
-            options: ["คุณลักษณะ/ตัวแปร input ของโมเดล", "ผลลัพธ์ของโมเดล", "ฟังก์ชัน activation", "จำนวน layer"],
-            answer: "คุณลักษณะ/ตัวแปร input ของโมเดล",
-        },
-    ],
-    "web-development": [
-        {
-            question: "HTML ย่อมาจากอะไร?",
-            options: ["HyperText Markup Language", "High Transfer Markup Language", "Hyperlink Text Machine Language", "HyperText Machine Language"],
-            answer: "HyperText Markup Language",
-        },
-        {
-            question: "CSS ใช้สำหรับอะไร?",
-            options: ["จัดรูปแบบและตกแต่งหน้าเว็บ", "สร้าง Database", "เขียน Logic", "จัดการ Server"],
-            answer: "จัดรูปแบบและตกแต่งหน้าเว็บ",
-        },
-        {
-            question: "REST API คืออะไร?",
-            options: ["รูปแบบสถาปัตยกรรม API ที่ใช้ HTTP", "Database", "Framework CSS", "Testing tool"],
-            answer: "รูปแบบสถาปัตยกรรม API ที่ใช้ HTTP",
-        },
-    ],
-};
-
-// เลือก quiz ที่ตรงกับ stage/career มากที่สุด
-function pickQuiz(careerSlug, stageName) {
-    const slug = (careerSlug || "").toLowerCase();
-    const stage = (stageName || "").toLowerCase();
-
-    if (stage.includes("foundation") || stage.includes("พื้นฐาน")) return quizBank.foundations;
-    if (stage.includes("data") || slug.includes("data")) return quizBank["data-analysis"];
-    if (stage.includes("machine") || slug.includes("machine")) return quizBank["machine-learning"];
-    if (stage.includes("web") || slug.includes("web")) return quizBank["web-development"];
-    return quizBank.default;
-}
+const API_BASE = "http://localhost:4546/api";
+const PASS_SCORE = 8; // ต้องผ่าน 8/10 ข้อ
 
 function Quiz() {
     const navigate = useNavigate();
     const { careerSlug, stageId } = useParams();
     const { state } = useLocation();
 
-    // ข้อมูล stage จาก location state (ส่งมาจาก LearningPath)
     const careerName = state?.careerName || decodeURIComponent(careerSlug || "General");
     const stageName = state?.stageName || `Stage ${stageId || ""}`;
     const stageSubtitle = state?.stageSubtitle || "";
 
-    const quizData = pickQuiz(careerSlug, stageName);
-
+    const [quizData, setQuizData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [loadError, setLoadError] = useState("");
     const [answers, setAnswers] = useState({});
     const [message, setMessage] = useState("");
     const startedAtRef = useRef(Date.now());
+
+    // ─── Fetch AI-generated questions every time the page loads ───────────
+    useEffect(() => {
+        let cancelled = false;
+        setLoading(true);
+        setLoadError("");
+        setAnswers({});
+        setMessage("");
+        startedAtRef.current = Date.now();
+
+        (async () => {
+            try {
+                const res = await fetch(`${API_BASE}/quiz/generate`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        career_name: careerName,
+                        stage_name: stageName,
+                        career_slug: careerSlug || "",
+                    }),
+                });
+
+                if (!res.ok) throw new Error(`Server responded ${res.status}`);
+
+                const data = await res.json();
+                if (!cancelled) {
+                    if (data.questions && data.questions.length > 0) {
+                        setQuizData(data.questions);
+                    } else {
+                        setLoadError("ไม่สามารถสร้างคำถามได้ กรุณาลองใหม่อีกครั้ง");
+                    }
+                }
+            } catch (err) {
+                if (!cancelled) {
+                    console.error("Quiz generate error:", err);
+                    setLoadError("เกิดข้อผิดพลาดในการสร้างคำถาม กรุณาตรวจสอบการเชื่อมต่อแล้วลองใหม่");
+                }
+            } finally {
+                if (!cancelled) setLoading(false);
+            }
+        })();
+
+        return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [careerSlug, stageId]);
 
     const handleChange = (idx, value) => {
         setAnswers((prev) => ({ ...prev, [idx]: value }));
@@ -138,6 +85,7 @@ function Quiz() {
         const incorrectCount = totalQuestions - correctCount;
         const progress = Math.round((correctCount / totalQuestions) * 100);
         const elapsedMinutes = Math.max(1, Math.round((Date.now() - startedAtRef.current) / 60000));
+        const passed = correctCount >= PASS_SCORE;
 
         navigate("/quiz-result", {
             state: {
@@ -150,9 +98,54 @@ function Quiz() {
                 stageName,
                 careerSlug,
                 stageId,
+                isLastStage: state?.isLastStage,
+                totalStages: state?.totalStages,
+                passed,
+                passScore: PASS_SCORE,
             },
         });
     };
+
+    // ─── Loading state ────────────────────────────────────────────────────
+    if (loading) {
+        return (
+            <div className="quiz-page">
+                <main className="quiz-main">
+                    <section className="quiz-card quiz-loading-card">
+                        <div className="quiz-loading-spinner" />
+                        <p className="quiz-loading-text">
+                            🤖 AI กำลังสร้างคำถามสำหรับ "{stageName}"…
+                        </p>
+                        <p className="quiz-loading-sub">อาจใช้เวลาสักครู่ กรุณารอ</p>
+                    </section>
+                </main>
+            </div>
+        );
+    }
+
+    // ─── Error state ──────────────────────────────────────────────────────
+    if (loadError) {
+        return (
+            <div className="quiz-page">
+                <main className="quiz-main">
+                    <section className="quiz-card quiz-error-card">
+                        <span style={{ fontSize: 48 }}>⚠️</span>
+                        <p className="quiz-error-text">{loadError}</p>
+                        <button
+                            className="quiz-submit-btn"
+                            onClick={() => {
+                                setLoading(true);
+                                setLoadError("");
+                                window.location.reload();
+                            }}
+                        >
+                            ลองใหม่
+                        </button>
+                    </section>
+                </main>
+            </div>
+        );
+    }
 
     return (
         <div className="quiz-page">
@@ -167,6 +160,11 @@ function Quiz() {
                 </p>
 
                 <h1 className="quiz-title">แบบทดสอบความรู้</h1>
+                
+                {/* Pass criteria badge */}
+                <div className="quiz-pass-badge">
+                    🎯 ต้องตอบถูกอย่างน้อย {PASS_SCORE}/{quizData.length} ข้อ จึงจะผ่าน Stage นี้
+                </div>
 
                 <section className="quiz-card">
                     <h3 className="quiz-card-title">{stageName}</h3>
@@ -193,6 +191,17 @@ function Quiz() {
                             </div>
                         </div>
                     ))}
+
+                    {/* Progress indicator */}
+                    <div className="quiz-answer-progress">
+                        <span>ตอบแล้ว {Object.keys(answers).length}/{quizData.length} ข้อ</span>
+                        <div className="quiz-answer-track">
+                            <div
+                                className="quiz-answer-fill"
+                                style={{ width: `${(Object.keys(answers).length / quizData.length) * 100}%` }}
+                            />
+                        </div>
+                    </div>
 
                     {message && <p className="quiz-message error">{message}</p>}
 
