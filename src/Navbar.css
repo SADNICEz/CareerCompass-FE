@@ -1,45 +1,69 @@
-
 .navbar {
-  position: fixed; 
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 80px; 
-  background-color: #ffffff; 
-  
-  border-bottom: 4px solid #143D60; 
-  
+  height: 72px;
+  background-color: #ffffff;
+  border-bottom: 2px solid #143d60;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 10%; 
-  z-index: 1000; 
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+  padding: 0 44px;
+  z-index: 1000;
 }
 
 .nav-logo {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #143D60; 
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #111a34;
   text-decoration: none;
+  line-height: 1;
 }
 
 .nav-menu {
   display: flex;
-  gap: 15px;
+  align-items: center;
+  gap: 14px;
 }
 
-.btn-outline {
+.nav-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 2px solid #dbe2ec;
+}
+
+.btn-logout {
+  border: 1.5px solid #ff5a00;
+  background: #ffffff;
+  color: #ff5a00;
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.btn-logout:hover {
+  background: #fff4ec;
+}
+
+.btn-outline,
+.btn-solid {
   text-decoration: none;
   padding: 8px 25px;
   border-radius: 25px;
   font-weight: 600;
-
-  background: #ff5a00;    
-  color: white;            
-  border: 1.5px solid #ff5a00;
-
   transition: 0.3s;
+}
+
+.btn-outline {
+  background: #ff5a00;
+  color: white;
+  border: 1.5px solid #ff5a00;
 }
 
 .btn-outline:hover {
@@ -49,17 +73,33 @@
 }
 
 .btn-solid {
-  text-decoration: none;
-  padding: 8px 25px;
-  border-radius: 25px;
-  font-weight: 600;
   background: #ff5a00;
   color: white;
   border: 1.5px solid #ff5a00;
-  transition: 0.3s;
 }
 
 .btn-solid:hover {
   background: #e65100;
   border-color: #e65100;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    height: 64px;
+    padding: 0 16px;
+  }
+
+  .nav-logo {
+    font-size: 2rem;
+  }
+
+  .nav-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .btn-logout {
+    font-size: 1rem;
+    padding: 8px 14px;
+  }
 }

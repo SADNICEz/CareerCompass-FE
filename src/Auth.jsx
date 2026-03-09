@@ -104,13 +104,7 @@ function Auth() {
         body: JSON.stringify(registerForm),
       });
 
-      const raw = await res.text();
-      console.log('register status:', res.status, 'body:', raw);
-
-      const data = raw ? JSON.parse(raw) : {};
-      if (!res.ok) {
-        throw new Error(data.error || 'Request failed');
-      }
+      const data = await parseResponse(res);
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
       navigate('/home');
