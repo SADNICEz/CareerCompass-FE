@@ -191,6 +191,31 @@
     font-size: 16px;
 }
 
+/* ── Pass / Fail badge ── */
+.quiz-pass-threshold {
+    margin: 10px 0 14px;
+}
+
+.quiz-pass-badge-result {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.quiz-pass-badge-result.pass {
+    background: #d1fae5;
+    color: #065f46;
+    border: 1px solid #6ee7b7;
+}
+
+.quiz-pass-badge-result.fail {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+}
+
 @media (max-width: 768px) {
     .quiz-result-page {
         padding: 104px 12px 28px;
