@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { AlertTriangle, X } from 'lucide-react';
 import './LearningPath.css';
 
 const API_BASE = 'http://localhost:4546/api';
@@ -12,6 +14,7 @@ const LearningPath = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [updatingProgress, setUpdatingProgress] = useState(false);
+    const [showCancelConfirm, setShowCancelConfirm] = useState(false);
 
     // Get user info from localStorage
     const userId = localStorage.getItem('user_id') || null;
@@ -299,7 +302,7 @@ const LearningPath = () => {
                             <div className="courses-footer">
                                 <button
                                     className="cancel-path-button"
-                                    onClick={() => navigate('/home')}
+                                    onClick={() => setShowCancelConfirm(true)}
                                 >
                                     ยกเลิกเส้นทาง
                                 </button>
@@ -308,6 +311,54 @@ const LearningPath = () => {
                     )}
                 </div>
             </div>
+
+            {/* Cancel Learning Path Confirmation Modal */}
+            <AnimatePresence>
+                {showCancelConfirm && (
+                    <div className="lp-modal-overlay">
+                        <motion.div
+                            className="lp-modal-card"
+                            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                        >
+                            <button className="lp-modal-close" onClick={() => setShowCancelConfirm(false)}>
+                                <X size={20} />
+                            </button>
+
+                            <div className="lp-modal-icon-container">
+                                <div className="lp-modal-icon-bg">
+                                    <AlertTriangle className="lp-modal-icon" size={32} />
+                                </div>
+                            </div>
+
+                            <div className="lp-modal-content">
+                                <h2 className="lp-modal-title">ยืนยันการยกเลิก</h2>
+                                <p className="lp-modal-message">
+                                    คุณแน่ใจหรือไม่ว่าต้องการยกเลิกเส้นทางการเรียนรู้นี้? 
+                                    ความคืบหน้าของคุณจะยังคงอยู่ แต่คุณจะกลับไปยังหน้าหลัก
+                                </p>
+                            </div>
+
+                            <div className="lp-modal-actions">
+                                <button
+                                    className="lp-modal-btn-secondary"
+                                    onClick={() => setShowCancelConfirm(false)}
+                                >
+                                    กลับไปเรียนต่อ
+                                </button>
+                                <button
+                                    className="lp-modal-btn-danger"
+                                    onClick={() => navigate('/home')}
+                                >
+                                    ใช่, ยกเลิกเลย
+                                </button>
+                            </div>
+                        </motion.div>
+                    </div>
+                )}
+            </AnimatePresence>
         </div>
     );
 };
