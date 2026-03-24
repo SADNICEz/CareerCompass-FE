@@ -63,7 +63,7 @@ function Quiz() {
         })();
 
         return () => { cancelled = true; };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [careerSlug, stageId]);
 
     const handleChange = (idx, value) => {
@@ -114,7 +114,7 @@ function Quiz() {
                     <section className="quiz-card quiz-loading-card">
                         <div className="quiz-loading-spinner" />
                         <p className="quiz-loading-text">
-                            🤖 AI กำลังสร้างคำถามสำหรับ "{stageName}"…
+                            AI กำลังสร้างคำถามสำหรับ "{stageName}"…
                         </p>
                         <p className="quiz-loading-sub">อาจใช้เวลาสักครู่ กรุณารอ</p>
                     </section>
@@ -160,10 +160,10 @@ function Quiz() {
                 </p>
 
                 <h1 className="quiz-title">แบบทดสอบความรู้</h1>
-                
+
                 {/* Pass criteria badge */}
                 <div className="quiz-pass-badge">
-                    🎯 ต้องตอบถูกอย่างน้อย {PASS_SCORE}/{quizData.length} ข้อ จึงจะผ่าน Stage นี้
+                    ต้องตอบถูกอย่างน้อย {PASS_SCORE}/{quizData.length} ข้อ จึงจะผ่าน Stage นี้
                 </div>
 
                 <section className="quiz-card">
