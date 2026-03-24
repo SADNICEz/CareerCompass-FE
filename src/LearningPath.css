@@ -709,7 +709,7 @@
 }
 
 .quiz-nav-button {
-  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  background: linear-gradient(135deg, var(--brand-start), var(--brand-mid));
   color: white;
   border: none;
   padding: .45rem 1.35rem;
@@ -722,12 +722,12 @@
   display: flex;
   align-items: center;
   gap: .4rem;
-  box-shadow: 0 4px 14px rgba(124, 58, 237, .3);
+  box-shadow: 0 4px 14px rgba(255, 107, 53, .3);
 }
 
 .quiz-nav-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(124, 58, 237, .45);
+  box-shadow: 0 8px 20px rgba(255, 107, 53, .45);
 }
 
 .view-all-button {
