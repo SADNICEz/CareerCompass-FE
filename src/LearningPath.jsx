@@ -15,6 +15,7 @@ const LearningPath = () => {
     const [error, setError] = useState(null);
     const [updatingProgress, setUpdatingProgress] = useState(false);
     const [showCancelConfirm, setShowCancelConfirm] = useState(false);
+    const [showRetakeConfirm, setShowRetakeConfirm] = useState(false);
 
     // Get user info from localStorage
     const userId = localStorage.getItem('user_id') || null;
@@ -101,6 +102,49 @@ const LearningPath = () => {
             case 'completed': return 'Completed ✓';
             case 'in-progress': return 'In Progress';
             default: return 'Locked';
+        }
+    };
+
+    const handleCancelPath = async () => {
+        if (!userIdFromToken) {
+            navigate('/home');
+            return;
+        }
+        try {
+            const slug = decodeURIComponent(careerSlug || 'Data Scientist');
+            await fetch(`${API_BASE}/learning-path/${encodeURIComponent(slug)}/reset?user_id=${userIdFromToken}`, {
+                method: 'DELETE',
+            });
+            navigate('/home');
+        } catch (err) {
+            console.error('Failed to reset path', err);
+            navigate('/home');
+        }
+    };
+
+    const navigateToQuiz = () => {
+        navigate(
+            `/quiz/${encodeURIComponent(careerSlug || 'general')}/${selectedStage.id}`,
+            {
+                state: {
+                    careerName: learningPath.career_name,
+                    stageName: selectedStage.title,
+                    stageSubtitle: selectedStage.subtitle,
+                    stageId: selectedStage.id,
+                    careerSlug: careerSlug,
+                    courses: selectedStage.courses ? selectedStage.courses.map(c => c.title) : [],
+                    isLastStage: learningPath.stages[learningPath.stages.length - 1].id === selectedStage.id,
+                    totalStages: learningPath.total_stages,
+                },
+            }
+        );
+    };
+
+    const handleQuizClick = () => {
+        if (selectedStage.status === 'completed') {
+            setShowRetakeConfirm(true);
+        } else {
+            navigateToQuiz();
         }
     };
 
@@ -218,23 +262,9 @@ const LearningPath = () => {
                                         {getStatusLabel(selectedStage.status)}
                                     </span>
                                     <button
-                                        className="quiz-nav-button"
-                                        onClick={() =>
-                                            navigate(
-                                                `/quiz/${encodeURIComponent(careerSlug || 'general')}/${selectedStage.id}`,
-                                                {
-                                                    state: {
-                                                        careerName: learningPath.career_name,
-                                                        stageName: selectedStage.title,
-                                                        stageSubtitle: selectedStage.subtitle,
-                                                        stageId: selectedStage.id,
-                                                        careerSlug: careerSlug,
-                                                        isLastStage: learningPath.stages[learningPath.stages.length - 1].id === selectedStage.id,
-                                                        totalStages: learningPath.total_stages,
-                                                    },
-                                                }
-                                            )
-                                        }
+                                        className={`quiz-nav-button ${selectedStage.status === 'locked' ? 'course-button-disabled' : ''}`}
+                                        disabled={selectedStage.status === 'locked'}
+                                        onClick={handleQuizClick}
                                     >
                                         ทำแบบทดสอบ
                                     </button>
@@ -350,9 +380,56 @@ const LearningPath = () => {
                                 </button>
                                 <button
                                     className="lp-modal-btn-danger"
-                                    onClick={() => navigate('/home')}
+                                    onClick={handleCancelPath}
                                 >
                                     ใช่, ยกเลิกเลย
+                                </button>
+                            </div>
+                        </motion.div>
+                    </div>
+                )}
+
+                {showRetakeConfirm && (
+                    <div className="lp-modal-overlay">
+                        <motion.div
+                            className="lp-modal-card"
+                            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                        >
+                            <button className="lp-modal-close" onClick={() => setShowRetakeConfirm(false)}>
+                                <X size={20} />
+                            </button>
+
+                            <div className="lp-modal-icon-container">
+                                <div className="lp-modal-icon-bg">
+                                    <AlertTriangle className="lp-modal-icon" size={32} />
+                                </div>
+                            </div>
+
+                            <div className="lp-modal-content">
+                                <h2 className="lp-modal-title">ทำแบบทดสอบอีกครั้ง?</h2>
+                                <p className="lp-modal-message">
+                                    คุณได้ผ่านด่านนี้ไปแล้ว คุณต้องการที่จะทำแบบทดสอบเพื่อทบทวนความรู้อีกครั้งหรือไม่?
+                                </p>
+                            </div>
+
+                            <div className="lp-modal-actions">
+                                <button
+                                    className="lp-modal-btn-secondary"
+                                    onClick={() => setShowRetakeConfirm(false)}
+                                >
+                                    ยกเลิก
+                                </button>
+                                <button
+                                    className="lp-modal-btn-danger"
+                                    onClick={() => {
+                                        setShowRetakeConfirm(false);
+                                        navigateToQuiz();
+                                    }}
+                                >
+                                    ใช่, ทำแบบทดสอบ
                                 </button>
                             </div>
                         </motion.div>
