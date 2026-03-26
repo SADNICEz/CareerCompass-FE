@@ -13,6 +13,7 @@ function Quiz() {
     const careerName = state?.careerName || decodeURIComponent(careerSlug || "General");
     const stageName = state?.stageName || `Stage ${stageId || ""}`;
     const stageSubtitle = state?.stageSubtitle || "";
+    const courses = state?.courses || [];
 
     const [quizData, setQuizData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -39,6 +40,7 @@ function Quiz() {
                         career_name: careerName,
                         stage_name: stageName,
                         career_slug: careerSlug || "",
+                        course_titles: courses,
                     }),
                 });
 
