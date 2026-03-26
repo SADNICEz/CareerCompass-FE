@@ -1,6 +1,6 @@
-import { useState } from "react"; 
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "./context/UserContext.jsx"; 
+import { useUser } from "./context/UserContext.jsx";
 import "./BasicKnowledge.css";
 
 import formIcon from "./assets/form.png";
@@ -17,7 +17,7 @@ function BasicKnowledge() {
     const finalPayload = {
       mbti: userData.mbti,
       aptitude: userData.aptitudeScores,
-      knowledge: textInput, 
+      knowledge: textInput,
     };
 
     console.log("กำลังส่งข้อมูลไป Backend:", finalPayload);
@@ -34,7 +34,7 @@ function BasicKnowledge() {
       });
 
       const data = await response.json();
-      
+
       // 3. (Optional) บันทึกผลลัพธ์ที่ได้จาก AI ลง Context เพื่อเอาไปโชว์หน้าถัดไป
       // updateUserData("results", data.recommended_careers);
 
@@ -99,15 +99,15 @@ function BasicKnowledge() {
       {/* ================= Knowledge Card ================= */}
       <div className="knowledge-card">
         <h2>แบบสอบถาม ความรู้พื้นฐาน</h2>
-        <p className="subtitle">ความรู้พื้นฐานของคุณมีอะไรบ้าง</p>
+        <p className="knowledge-card-subtitle">ความรู้พื้นฐานของคุณมีอะไรบ้าง </p>
 
         {/* Skill Tags */}
         <div className="skill-group">
           {skills.map((skill) => (
             <div key={skill} className="skill-box">
-               {skill}
+              {skill}
             </div>
-            ))}
+          ))}
         </div>
 
 
@@ -120,7 +120,7 @@ function BasicKnowledge() {
         />
 
         <div className="knowledge-footer">
-          <button 
+          <button
             className="back-btn"
             onClick={() => navigate("/Aptitude")}
             disabled={isLoading}
@@ -129,7 +129,7 @@ function BasicKnowledge() {
           </button>
 
           <button
-            className="confirm-btn" 
+            className="confirm-btn"
             onClick={handleConfirm}
             disabled={isLoading}
           >

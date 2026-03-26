@@ -42,13 +42,13 @@ function QuizResult() {
     const requiredPass = passScore ?? 8;
 
     const headline = hasPassed
-        ? "ยอดเยี่ยม! ผ่านแล้ว! 🎉"
-        : `ยังไม่ผ่าน ต้องได้ ${requiredPass}/${totalQuestions} ข้อขึ้นไป 💪`;
+        ? "ยอดเยี่ยม! เก่งมาก!"
+        : `ยังไม่ผ่าน ต้องได้ ${requiredPass}/${totalQuestions} ข้อขึ้นไป`;
 
     const summary = `คุณตอบถูก ${correctCount} จาก ${totalQuestions} ข้อ (${progress}%)`;
 
     const primaryButtonText = hasPassed
-        ? (isLastStage ? "เสร็จสมบูรณ์ 🎉" : "ไปด่านต่อไป 🚀")
+        ? (isLastStage ? "เสร็จสมบูรณ์ " : "ไปด่านต่อไป ")
         : "ทำแบบทดสอบใหม่";
 
     const handlePrimaryAction = async () => {
@@ -121,16 +121,6 @@ function QuizResult() {
                             <h2>{headline}</h2>
                             <p>{summary}</p>
 
-                            {/* Pass threshold indicator */}
-                            <div className="quiz-pass-threshold">
-                                <span
-                                    className={`quiz-pass-badge-result ${hasPassed ? "pass" : "fail"}`}
-                                >
-                                    {hasPassed
-                                        ? `✅ ผ่านเกณฑ์ (${correctCount}/${totalQuestions})`
-                                        : `❌ ไม่ผ่านเกณฑ์ — ต้องได้ ${requiredPass}/${totalQuestions} ขึ้นไป`}
-                                </span>
-                            </div>
 
                             <div className="quiz-progress-label-row">
                                 <span>คะแนน</span>
@@ -175,13 +165,15 @@ function QuizResult() {
                         >
                             {completing ? "กำลังบันทึก..." : primaryButtonText}
                         </button>
-                        <button
-                            type="button"
-                            className="quiz-result-btn ghost"
-                            onClick={() => navigate(`/learningpath/${careerSlug || ""}`)}
-                        >
-                            กลับไป Learning Path
-                        </button>
+                        {!hasPassed && (
+                            <button
+                                type="button"
+                                className="quiz-result-btn ghost"
+                                onClick={() => navigate(`/learningpath/${careerSlug || ""}`)}
+                            >
+                                กลับไป Learning Path
+                            </button>
+                        )}
                     </div>
                 </section>
             </main>

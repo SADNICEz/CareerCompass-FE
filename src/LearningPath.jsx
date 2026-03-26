@@ -104,6 +104,23 @@ const LearningPath = () => {
         }
     };
 
+    const handleCancelPath = async () => {
+        if (!userIdFromToken) {
+            navigate('/home');
+            return;
+        }
+        try {
+            const slug = decodeURIComponent(careerSlug || 'Data Scientist');
+            await fetch(`${API_BASE}/learning-path/${encodeURIComponent(slug)}/reset?user_id=${userIdFromToken}`, {
+                method: 'DELETE',
+            });
+            navigate('/home');
+        } catch (err) {
+            console.error('Failed to reset path', err);
+            navigate('/home');
+        }
+    };
+
     if (loading) {
         return (
             <div className="learning-path-container">
@@ -350,7 +367,7 @@ const LearningPath = () => {
                                 </button>
                                 <button
                                     className="lp-modal-btn-danger"
-                                    onClick={() => navigate('/home')}
+                                    onClick={handleCancelPath}
                                 >
                                     ใช่, ยกเลิกเลย
                                 </button>

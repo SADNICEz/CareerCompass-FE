@@ -161,11 +161,6 @@ function Quiz() {
 
                 <h1 className="quiz-title">แบบทดสอบความรู้</h1>
 
-                {/* Pass criteria badge */}
-                <div className="quiz-pass-badge">
-                    ต้องตอบถูกอย่างน้อย {PASS_SCORE}/{quizData.length} ข้อ จึงจะผ่าน Stage นี้
-                </div>
-
                 <section className="quiz-card">
                     <h3 className="quiz-card-title">{stageName}</h3>
                     {stageSubtitle && <p className="quiz-card-subtitle">{stageSubtitle}</p>}
