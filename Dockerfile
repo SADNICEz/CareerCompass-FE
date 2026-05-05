@@ -39,6 +39,6 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 # Custom Nginx config: handles React Router + gzip + caching headers
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+# Use the dynamic PORT variable provided by Railway
+# We use sed to replace 'listen 80;' with 'listen $PORT;' in the config
+CMD sed -i "s/listen 80;/listen ${PORT:-80};/" /etc/nginx/conf.d/default.conf && nginx -g "daemon off;"
