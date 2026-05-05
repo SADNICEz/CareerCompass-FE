@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "./context/UserContext.jsx";
 import "./BasicKnowledge.css";
 
+const API_BASE = `${import.meta.env.VITE_API_URL || 'http://localhost:4546'}/api`;
+
 import formIcon from "./assets/form.png";
 import aiIcon from "./assets/ai.png";
 import learningIcon from "./assets/learning.png";
@@ -20,12 +22,12 @@ function BasicKnowledge() {
       knowledge: textInput,
     };
 
-    console.log("กำลังส่งข้อมูลไป Backend:", finalPayload);
+    console.log("กำลังส่งข้อมูล...");
     setIsLoading(true);
 
     try {
       // 2. ยิง API ไปหา Backend (สมมติว่า Backend รันที่ port 3000)
-      const response = await fetch("http://localhost:4546/api/career-recommend", {
+      const response = await fetch(`${API_BASE}/career-recommend`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

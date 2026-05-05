@@ -2,7 +2,13 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./QuizResult.css";
 
-const API_BASE = "http://localhost:4546/api";
+const API_BASE = `${import.meta.env.VITE_API_URL || 'http://localhost:4546'}/api`;
+
+// Returns Authorization header if user is logged in
+const getAuthHeader = () => {
+    const token = localStorage.getItem('token');
+    return token ? { Authorization: `Bearer ${token}` } : {};
+};
 
 function QuizResult() {
     const location = useLocation();
@@ -62,7 +68,7 @@ function QuizResult() {
                     setCompleting(true);
                     await fetch(`${API_BASE}/learning-path/complete-stage`, {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
+                        headers: { "Content-Type": "application/json", ...getAuthHeader() },
                         body: JSON.stringify({
                             user_id: userId,
                             stage_id: stageId,

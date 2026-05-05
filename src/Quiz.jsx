@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import "./Quiz.css";
 
-const API_BASE = "http://localhost:4546/api";
+const API_BASE = `${import.meta.env.VITE_API_URL || 'http://localhost:4546'}/api`;
 const PASS_SCORE = 8; // ต้องผ่าน 8/10 ข้อ
 
 function Quiz() {

@@ -4,7 +4,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { AlertTriangle, X } from 'lucide-react';
 import './LearningPath.css';
 
-const API_BASE = 'http://localhost:4546/api';
+const API_BASE = `${import.meta.env.VITE_API_URL || 'http://localhost:4546'}/api`;
+
+// Returns Authorization header if user is logged in
+const getAuthHeader = () => {
+    const token = localStorage.getItem('token');
+    return token ? { Authorization: `Bearer ${token}` } : {};
+};
 
 const LearningPath = () => {
     const navigate = useNavigate();
@@ -60,7 +66,7 @@ const LearningPath = () => {
             setUpdatingProgress(true);
             const res = await fetch(`${API_BASE}/learning-path/progress`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
                 body: JSON.stringify({
                     user_id: userIdFromToken,
                     stage_id: stageId,
@@ -114,6 +120,7 @@ const LearningPath = () => {
             const slug = decodeURIComponent(careerSlug || 'Data Scientist');
             await fetch(`${API_BASE}/learning-path/${encodeURIComponent(slug)}/reset?user_id=${userIdFromToken}`, {
                 method: 'DELETE',
+                headers: { ...getAuthHeader() },
             });
             navigate('/home');
         } catch (err) {

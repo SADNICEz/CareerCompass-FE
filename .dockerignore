@@ -1,0 +1,26 @@
+# Don't copy these into the Docker build context
+
+# Dependencies (re-installed inside the container)
+node_modules
+
+# Build output (built inside the container)
+dist
+
+# Environment files — VITE_API_URL is passed as a build arg, not a file
+.env
+.env.*
+!.env.example
+
+# Git history
+.git
+.gitignore
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.swo
+
+# Docs
+README.md

@@ -11,7 +11,7 @@ import Aptitude from "./Aptitude";
 import BasicKnowledge from "./BasicKnowledge";
 import Quiz from "./Quiz";
 import QuizResult from "./QuizResult";
-import CareerList from "./Careerlist";
+import CareerList from "./CareerList";
 import { UserProvider } from "./context/UserContext";
 import LearningPath from "./LearningPath";
 import { ProgressProvider } from "./context/ProgressContext";
